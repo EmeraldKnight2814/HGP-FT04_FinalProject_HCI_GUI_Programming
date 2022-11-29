@@ -9,8 +9,8 @@ class Board(QFrame):  # base the board on a QFrame widget
     clickLocationSignal = pyqtSignal(str) # signal sent when there is a new click location
 
     # TODO set the board width and height to be square
-    boardWidth  = 0     # board is 0 squares wide # TODO this needs updating
-    boardHeight = 0     #
+    boardWidth  = 7     # board is 0 squares wide # TODO this needs updating
+    boardHeight = 7     #
     timerSpeed  = 1000     # the timer updates every 1 millisecond
     counter     = 10    # the number the counter will count down from
 
@@ -24,8 +24,8 @@ class Board(QFrame):  # base the board on a QFrame widget
         self.isStarted = False      # game is not currently started
         self.start()                # start the game which will start the timer
 
-        self.boardArray =[]         # TODO - create a 2d int/Piece array to store the state of the game
-        # self.printBoardArray()    # TODO - uncomment this method after creating the array above
+        self.boardArray =[[0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6]]        # TODO - create a 2d int/Piece array to store the state of the game
+        self.printBoardArray()    # TODO - uncomment this method after creating the array above
 
     def printBoardArray(self):
         '''prints the boardArray in an attractive way'''
@@ -90,9 +90,9 @@ class Board(QFrame):  # base the board on a QFrame widget
         for row in range(0, Board.boardHeight):
             for col in range (0, Board.boardWidth):
                 painter.save()
-                colTransformation = self.squareWidth()* col # TODO set this value equal the transformation in the column direction
-                rowTransformation = 0                       # TODO set this value equal the transformation in the row direction
-                painter.translate(colTransformation,rowTransformation)
+                colTransformation = self.squareWidth() * col # TODO set this value equal the transformation in the column direction
+                rowTransformation = 0        # TODO set this value equal the transformation in the row direction
+                painter.translate(colTransformation, rowTransformation)
                 painter.fillRect()                          # TODO provide the required arguments
                 painter.restore()
                 # TODO change the colour of the brush so that a checkered board is drawn
