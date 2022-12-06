@@ -8,7 +8,6 @@ class Board(QFrame):  # base the board on a QFrame widget
     updateTimerSignal = pyqtSignal(int) # signal sent when timer is updated
     clickLocationSignal = pyqtSignal(str) # signal sent when there is a new click location
 
-    # TODO set the board width and height to be square
     boardWidth  = 7     # board is 7 squares wide
     boardHeight = 7     # board is 7 squares tall
     timerSpeed  = 1000     # the timer updates every 1 second
@@ -23,10 +22,9 @@ class Board(QFrame):  # base the board on a QFrame widget
         self.timer = QBasicTimer()  # create a timer for the game
         self.isStarted = False      # game is not currently started
         self.start()                # start the game which will start the timer
-        self.paintEvent()
 
         self.boardArray =[[0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6]]        # TODO - create a 2d int/Piece array to store the state of the game
-        self.printBoardArray()    # TODO - uncomment this method after creating the array above
+        self.printBoardArray()
 
     def printBoardArray(self):
         '''prints the boardArray in an attractive way'''
@@ -69,7 +67,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         '''paints the board and the pieces of the game'''
         painter = QPainter(self)
         self.drawBoardSquares(painter)
-        self.drawPieces(painter)
+        #self.drawPieces(painter)
 
     def mousePressEvent(self, event):
         '''this event is automatically called when the mouse is pressed'''
@@ -88,16 +86,27 @@ class Board(QFrame):  # base the board on a QFrame widget
     def drawBoardSquares(self, painter):
         '''draw all the square on the board'''
         # TODO set the default colour of the brush
-
+        self.brush = QBrush(Qt.BrushStyle.SolidPattern)
+        self.brush.setColor(QColor(191, 162, 77))
+        painter.setBrush(self.brush)
         for row in range(0, Board.boardHeight):
             for col in range (0, Board.boardWidth):
                 painter.save()
                 colTransformation = self.squareWidth() * col  # TODO set this value equal the transformation in the column direction
                 rowTransformation = self.squareHeight() * row # TODO set this value equal the transformation in the row direction
                 painter.translate(colTransformation, rowTransformation)
-                painter.fillRect(colTransformation, rowTransformation, 1, 1)                          # TODO provide the required arguments
+                painter.fillRect(col, row, self.squareWidth(), self.squareHeight(), painter.brush())                          # TODO provide the required arguments
                 painter.restore()
                 # TODO change the colour of the brush so that a checkered board is drawn
+                if(self.brush.color() == QColor(191, 162, 77)):
+                    self.brush.setColor(QColor(138, 109, 49))
+                    painter.setBrush(self.brush)
+                elif(self.brush.color() == QColor(138, 109, 49)):
+                    self.brush.setColor(QColor(191, 162, 77))
+                    painter.setBrush(self.brush)
+                else:
+                    self.brush.setColor(QColor(138, 109, 49))
+                    painter.setBrush(self.brush)
 
     def drawPieces(self, painter):
         '''draw the prices on the board'''
@@ -108,6 +117,7 @@ class Board(QFrame):  # base the board on a QFrame widget
                 painter.translate()
 
                 # TODO draw some the pieces as ellipses
+                
                 # TODO choose your colour and set the painter brush to the correct colour
                 radius = self.squareWidth() / 4
                 center = QPointF(radius, radius)
