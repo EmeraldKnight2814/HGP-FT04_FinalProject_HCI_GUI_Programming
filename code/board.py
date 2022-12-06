@@ -8,8 +8,8 @@ class Board(QFrame):  # base the board on a QFrame widget
     updateTimerSignal = pyqtSignal(int) # signal sent when timer is updated
     clickLocationSignal = pyqtSignal(str) # signal sent when there is a new click location
 
-    boardWidth  = 7     # board is 7 squares wide
-    boardHeight = 7     # board is 7 squares tall
+    boardWidth  = 8     # board is 7 squares wide
+    boardHeight = 8     # board is 7 squares tall
     timerSpeed  = 1000     # the timer updates every 1 second
     counter     = 100    # the number the counter will count down from
 
@@ -23,7 +23,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         self.isStarted = False      # game is not currently started
         self.start()                # start the game which will start the timer
 
-        self.boardArray =[[0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6]]        # TODO - create a 2d int/Piece array to store the state of the game
+        self.boardArray =[[0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7]]        # TODO - create a 2d int/Piece array to store the state of the game
         self.printBoardArray()
 
     def printBoardArray(self):
@@ -67,7 +67,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         '''paints the board and the pieces of the game'''
         painter = QPainter(self)
         self.drawBoardSquares(painter)
-        self.drawPieces(painter)
+        #self.drawPieces(painter)
 
     def mousePressEvent(self, event):
         '''this event is automatically called when the mouse is pressed'''
@@ -87,7 +87,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         '''draw all the square on the board'''
         # TODO set the default colour of the brush
         self.brush = QBrush(Qt.BrushStyle.SolidPattern)
-        self.brush.setColor(QColor(191, 162, 77))
+        self.brush.setColor(QColor(0, 0, 0))
         painter.setBrush(self.brush)
         for row in range(0, Board.boardHeight):
             for col in range (0, Board.boardWidth):
@@ -95,18 +95,29 @@ class Board(QFrame):  # base the board on a QFrame widget
                 colTransformation = self.squareWidth() * col  # TODO set this value equal the transformation in the column direction
                 rowTransformation = self.squareHeight() * row # TODO set this value equal the transformation in the row direction
                 painter.translate(colTransformation, rowTransformation)
-                painter.fillRect(col, row, self.squareWidth(), self.squareHeight(), painter.brush())                          # TODO provide the required arguments
-                painter.restore()
+
                 # TODO change the colour of the brush so that a checkered board is drawn
-                if(self.brush.color() == QColor(191, 162, 77)):
-                    self.brush.setColor(QColor(138, 109, 49))
-                    painter.setBrush(self.brush)
-                elif(self.brush.color() == QColor(138, 109, 49)):
-                    self.brush.setColor(QColor(191, 162, 77))
+                if (col == 0 or col == 7 or row == 0 or row == 7):
+                    self.brush.setColor(QColor(0, 0, 0))
                     painter.setBrush(self.brush)
                 else:
-                    self.brush.setColor(QColor(138, 109, 49))
-                    painter.setBrush(self.brush)
+                    if(col % 2 == 0):
+                        if(row % 2 == 0):
+                            self.brush.setColor(QColor(138, 109, 49))
+                            painter.setBrush(self.brush)
+                        else:
+                            self.brush.setColor(QColor(191, 162, 77))
+                            painter.setBrush(self.brush)
+                    else:
+                        if (row % 2 == 0):
+                            self.brush.setColor(QColor(191, 162, 77))
+                            painter.setBrush(self.brush)
+                        else:
+                            self.brush.setColor(QColor(138, 109, 49))
+                            painter.setBrush(self.brush)
+
+                painter.fillRect(col, row, self.squareWidth(), self.squareHeight(), painter.brush())                          # TODO provide the required arguments
+                painter.restore()
 
     def drawPieces(self, painter):
         '''draw the prices on the board'''
