@@ -20,6 +20,9 @@ class ScoreBoard(QDockWidget):
         #a button that will pass the turn if clicked once and end the game if clicked twice
         self.pass_button = QPushButton("Pass")
         self.pass_button.pressed.connect(self.passTurn)
+        self.start_button = QPushButton("Start")
+        self.reset_button = QPushButton("Reset")
+        self.see_rules = QPushButton("See Rules")
 
         #create two labels which will be updated by signals
         self.label_clickLocation = QLabel("Click Location: ")
@@ -27,6 +30,9 @@ class ScoreBoard(QDockWidget):
         self.mainWidget.setLayout(self.mainLayout)
         self.mainLayout.addWidget(self.label_clickLocation)
         self.mainLayout.addWidget(self.pass_button)
+        self.mainLayout.addWidget(self.start_button)
+        self.mainLayout.addWidget(self.see_rules)
+        self.mainLayout.addWidget(self.reset_button)
         self.mainLayout.addWidget(self.label_timeRemaining)
         self.setWidget(self.mainWidget)
         self.show()
@@ -57,5 +63,3 @@ class ScoreBoard(QDockWidget):
 
     def passTurn(self):
         print("pass")
-
-
