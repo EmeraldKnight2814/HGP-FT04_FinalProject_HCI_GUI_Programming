@@ -23,7 +23,7 @@ class Go(QMainWindow):
         self.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.scoreBoard)
         self.scoreBoard.make_connection(self.board)
 
-        self.resize(1000, 600)
+        self.resize(800, 600)
         self.center()
         self.setWindowTitle('Go')
         self.show()
