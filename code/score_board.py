@@ -71,6 +71,11 @@ class ScoreBoard(QDockWidget):
         self.label_playerTurn.setText("Player Turn:" + )
         print('slot ' + )
 
+    def setPlayerPoints(self, point):
+        '''updates the label to show the players turn'''
+        self.label_playerPoints.setText("Player Points:" + )
+        print('slot ' + )
+
     def passTurn(self):
         print("pass")
 
