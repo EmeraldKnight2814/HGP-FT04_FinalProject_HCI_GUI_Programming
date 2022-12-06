@@ -68,19 +68,20 @@ class ScoreBoard(QDockWidget):
 
     def setPlayersTurn(self, turn):
         '''updates the label to show the players turn'''
-        self.label_playerTurn.setText("Player Turn:" + )
-        print('slot ' + )
+        self.label_playerTurn.setText("Player Turn:" + "")
+        print('slot ' + '')
 
     def setPlayerPoints(self, point):
         '''updates the label to show the players turn'''
-        self.label_playerPoints.setText("Player Points:" + )
-        print('slot ' + )
+        self.label_playerPoints.setText("Player Points:" + "")
+        print('slot ' + '')
 
     def passTurn(self):
         print("pass")
         # TODO: Write code to say that if the button is clicked twice it ends the game and puts up a dialog box
 
     def startGame(self):
+        print("Start")
             # TODO: Write start sequence
 
     def seeRule(self):
@@ -109,4 +110,5 @@ class ScoreBoard(QDockWidget):
         ruleBox.exec()
 
     def reset(self):
+        print("Reset")
         # TODO: write reset code

@@ -113,15 +113,9 @@ class Board(QFrame):  # base the board on a QFrame widget
                             self.brush.setColor(QColor(138, 109, 49))
                             painter.setBrush(self.brush)
 
-                if(row == 0 and col == 0):
-                    painter.fillRect(col, row, self.squareWidth() + 2, self.squareHeight() - 2, painter.brush())
-                elif(row == 7 and col == 0):
-                    painter.fillRect(col, row, self.squareWidth() + 2, self.squareHeight() + 2, painter.brush())
-                elif (row == 0 and col == 7):
-                    painter.fillRect(col, row, self.squareWidth() + 2, self.squareHeight() + 2, painter.brush())
-                elif (row == 7 and col == 7):
-                    painter.fillRect(col, row, self.squareWidth() + 2, self.squareHeight() + 2, painter.brush())
-                elif(row == 0 or row == 7):
+                if((row == 0 and col == 0) or (row == 0 and col == 7)):
+                    painter.fillRect(col, row, self.squareWidth() - 2, self.squareHeight() + 2, painter.brush())
+                if(row == 0 or row == 7):
                     painter.fillRect(col, row, self.squareWidth() + 2, self.squareHeight() - 2, painter.brush())
                 elif(col == 0 or col == 7):
                     painter.fillRect(col, row, self.squareWidth() - 2, self.squareHeight() + 2, painter.brush())
