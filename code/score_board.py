@@ -23,12 +23,15 @@ class ScoreBoard(QDockWidget):
         self.start_button = QPushButton("Start")
         self.start_button.pressed.connect(self.startGame)
         self.reset_button = QPushButton("Reset")
+        self.reset_button.pressed.connect(self.reset)
         self.see_rules = QPushButton("See Rules")
         self.see_rules.pressed.connect(self.seeRule)
 
         #create two labels which will be updated by signals
         self.label_clickLocation = QLabel("Click Location: ")
         self.label_timeRemaining = QLabel("Time remaining: ")
+        self.label_playerTurn = QLabel("Players Turn: ")
+        self.label_playerPoints = QLabel("Player Points: ")
         self.mainWidget.setLayout(self.mainLayout)
         self.mainLayout.addWidget(self.label_clickLocation)
         self.mainLayout.addWidget(self.pass_button)
@@ -63,6 +66,11 @@ class ScoreBoard(QDockWidget):
         print('slot '+update)
         # self.redraw()
 
+    def setPlayersTurn(self, turn):
+        '''updates the label to show the players turn'''
+        self.label_playerTurn.setText("Player Turn:" + )
+        print('slot ' + )
+
     def passTurn(self):
         print("pass")
 
@@ -90,3 +98,6 @@ class ScoreBoard(QDockWidget):
                         "the stones are removed from the board. The only exception is that a capturing stone may "
                         "have no liberty until the stones it captures are removed. ")
         ruleBox.exec()
+
+    def reset(self):
+        # TODO: write reset code
