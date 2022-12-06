@@ -23,7 +23,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         self.isStarted = False      # game is not currently started
         self.start()                # start the game which will start the timer
 
-        self.boardArray =[[0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7]]        # TODO - create a 2d int/Piece array to store the state of the game
+        self.boardArray =[[0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6]]        # TODO - create a 2d int/Piece array to store the state of the game
         self.printBoardArray()
 
     def printBoardArray(self):
@@ -67,7 +67,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         '''paints the board and the pieces of the game'''
         painter = QPainter(self)
         self.drawBoardSquares(painter)
-        #self.drawPieces(painter)
+        self.drawPieces(painter)
 
     def mousePressEvent(self, event):
         '''this event is automatically called when the mouse is pressed'''
@@ -92,13 +92,12 @@ class Board(QFrame):  # base the board on a QFrame widget
         for row in range(0, Board.boardHeight):
             for col in range (0, Board.boardWidth):
                 painter.save()
-                colTransformation = self.squareWidth() * col  # TODO set this value equal the transformation in the column direction
-                rowTransformation = self.squareHeight() * row # TODO set this value equal the transformation in the row direction
+                colTransformation = self.squareWidth() * col
+                rowTransformation = self.squareHeight() * row
                 painter.translate(colTransformation, rowTransformation)
-
-                # TODO change the colour of the brush so that a checkered board is drawn
+                # If outside row, make box dark brown to contrast with board and pieces
                 if (col == 0 or col == 7 or row == 0 or row == 7):
-                    self.brush.setColor(QColor(0, 0, 0))
+                    self.brush.setColor(QColor(100, 69, 12))
                     painter.setBrush(self.brush)
                 else:
                     if(col % 2 == 0):
@@ -116,7 +115,7 @@ class Board(QFrame):  # base the board on a QFrame widget
                             self.brush.setColor(QColor(138, 109, 49))
                             painter.setBrush(self.brush)
 
-                painter.fillRect(col, row, self.squareWidth(), self.squareHeight(), painter.brush())                          # TODO provide the required arguments
+                painter.fillRect(col, row, self.squareWidth(), self.squareHeight(), painter.brush())
                 painter.restore()
 
     def drawPieces(self, painter):
@@ -133,11 +132,9 @@ class Board(QFrame):  # base the board on a QFrame widget
         for row in range(0, len(self.boardArray)):
             for col in range(0, len(self.boardArray[0])):
                 painter.save()
-                colTransformation = self.squareWidth() * col
-                rowTransformation = self.squareHeight() * row
+                colTransformation = self.squareWidth() * col + (self.squareWidth() * .75)
+                rowTransformation = self.squareHeight() * row + (self.squareHeight() * .75)
                 painter.translate(colTransformation, rowTransformation)
-                # TODO draw some the pieces as ellipses
-                painter.drawEllipse(row, col, 10, 15)
                 # TODO choose your colour and set the painter brush to the correct colour
                 painter.setBrush(testBrush)         #For testing purposes
                 #painter.setBrush(brush)            #Actual brush
