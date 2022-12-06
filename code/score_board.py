@@ -1,5 +1,5 @@
-from PyQt6.QtWidgets import QDockWidget, QVBoxLayout, QWidget, QLabel, QPushButton #TODO import additional Widget classes as desired
-from PyQt6.QtCore import pyqtSlot
+from PyQt6.QtWidgets import * #TODO import additional Widget classes as desired
+from PyQt6.QtCore import *
 
 class ScoreBoard(QDockWidget):
     '''# base the score_board on a QDockWidget'''

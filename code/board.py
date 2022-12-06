@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QFrame
-from PyQt6.QtCore import Qt, QBasicTimer, pyqtSignal, QPointF
-from PyQt6.QtGui import QPainter
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 from PyQt6.QtTest import QTest
 from piece import Piece
 
@@ -9,10 +9,10 @@ class Board(QFrame):  # base the board on a QFrame widget
     clickLocationSignal = pyqtSignal(str) # signal sent when there is a new click location
 
     # TODO set the board width and height to be square
-    boardWidth  = 7     # board is 0 squares wide # TODO this needs updating
-    boardHeight = 7     #
-    timerSpeed  = 1000     # the timer updates every 1 millisecond
-    counter     = 10    # the number the counter will count down from
+    boardWidth  = 7     # board is 7 squares wide
+    boardHeight = 7     # board is 7 squares tall
+    timerSpeed  = 1000     # the timer updates every 1 second
+    counter     = 100    # the number the counter will count down from
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -23,6 +23,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         self.timer = QBasicTimer()  # create a timer for the game
         self.isStarted = False      # game is not currently started
         self.start()                # start the game which will start the timer
+        self.paintEvent()
 
         self.boardArray =[[0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6]]        # TODO - create a 2d int/Piece array to store the state of the game
         self.printBoardArray()    # TODO - uncomment this method after creating the array above
@@ -66,9 +67,9 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def paintEvent(self, event):
         '''paints the board and the pieces of the game'''
-        # painter = QPainter(self)
-        # self.drawBoardSquares(painter)
-        # self.drawPieces(painter)
+        painter = QPainter(self)
+        self.drawBoardSquares(painter)
+        self.drawPieces(painter)
 
     def mousePressEvent(self, event):
         '''this event is automatically called when the mouse is pressed'''
@@ -87,13 +88,14 @@ class Board(QFrame):  # base the board on a QFrame widget
     def drawBoardSquares(self, painter):
         '''draw all the square on the board'''
         # TODO set the default colour of the brush
+
         for row in range(0, Board.boardHeight):
             for col in range (0, Board.boardWidth):
                 painter.save()
-                colTransformation = self.squareWidth() * col # TODO set this value equal the transformation in the column direction
-                rowTransformation = 0        # TODO set this value equal the transformation in the row direction
+                colTransformation = self.squareWidth() * col  # TODO set this value equal the transformation in the column direction
+                rowTransformation = self.squareHeight() * row # TODO set this value equal the transformation in the row direction
                 painter.translate(colTransformation, rowTransformation)
-                painter.fillRect()                          # TODO provide the required arguments
+                painter.fillRect(colTransformation, rowTransformation, 1, 1)                          # TODO provide the required arguments
                 painter.restore()
                 # TODO change the colour of the brush so that a checkered board is drawn
 

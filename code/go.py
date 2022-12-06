@@ -1,7 +1,7 @@
-from PyQt6.QtWidgets import QMainWindow
-from PyQt6.QtCore import Qt
-from board import Board
-from score_board import ScoreBoard
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from board import *
+from score_board import *
 
 class Go(QMainWindow):
 
@@ -23,7 +23,7 @@ class Go(QMainWindow):
         self.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.scoreBoard)
         self.scoreBoard.make_connection(self.board)
 
-        self.resize(800, 800)
+        self.resize(1000, 600)
         self.center()
         self.setWindowTitle('Go')
         self.show()
