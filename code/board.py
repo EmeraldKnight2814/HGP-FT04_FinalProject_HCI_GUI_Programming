@@ -67,7 +67,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         '''paints the board and the pieces of the game'''
         painter = QPainter(self)
         self.drawBoardSquares(painter)
-        #self.drawPieces(painter)
+        self.drawPieces(painter)
 
     def mousePressEvent(self, event):
         '''this event is automatically called when the mouse is pressed'''
@@ -111,14 +111,25 @@ class Board(QFrame):  # base the board on a QFrame widget
     def drawPieces(self, painter):
         '''draw the prices on the board'''
         colour = Qt.GlobalColor.transparent # empty square could be modeled with transparent pieces
+        brush = QBrush(Qt.BrushStyle.SolidPattern)
+        brush.setColor(colour)
+
+        #TEST BRUSH TO GET SIZE AND SHAPE RIGHT
+        color = Qt.GlobalColor.blue
+        testBrush = QBrush(Qt.BrushStyle.SolidPattern)
+        testBrush.setColor(color)
+
         for row in range(0, len(self.boardArray)):
             for col in range(0, len(self.boardArray[0])):
                 painter.save()
-                painter.translate()
-
+                colTransformation = self.squareWidth() * col
+                rowTransformation = self.squareHeight() * row
+                painter.translate(colTransformation, rowTransformation)
                 # TODO draw some the pieces as ellipses
-                
+                painter.drawEllipse(row, col, 10, 15)
                 # TODO choose your colour and set the painter brush to the correct colour
+                painter.setBrush(testBrush)         #For testing purposes
+                #painter.setBrush(brush)            #Actual brush
                 radius = self.squareWidth() / 4
                 center = QPointF(radius, radius)
                 painter.drawEllipse(center, radius, radius)
