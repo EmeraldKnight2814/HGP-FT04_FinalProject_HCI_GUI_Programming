@@ -78,6 +78,7 @@ class ScoreBoard(QDockWidget):
 
     def passTurn(self):
         print("pass")
+        # TODO: Write code to say that if the button is clicked twice it ends the game and puts up a dialog box
 
     def startGame(self):
             # TODO: Write start sequence
@@ -101,7 +102,10 @@ class ScoreBoard(QDockWidget):
                         "Adjacent stones in a string share liberties, and the stones are said to have liberties. "
                         "If there are no empty points next to a stone or a string of stones (i.e. no liberties), "
                         "the stones are removed from the board. The only exception is that a capturing stone may "
-                        "have no liberty until the stones it captures are removed. ")
+                        "have no liberty until the stones it captures are removed. Types of Capture: capture of one stone,"
+                        " capture of three stones in a corner, capture of two strings, and capture by a stone with no "
+                        "liberties. No Repetition Rule: One may not play a move that repeats a previous board position."
+                        " This rule prevents players from endlessly capturing and recapturing a stone, back and forth.")
         ruleBox.exec()
 
     def reset(self):
