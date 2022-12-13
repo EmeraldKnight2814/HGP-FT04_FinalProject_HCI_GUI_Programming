@@ -9,9 +9,11 @@ class Go(QMainWindow):
         super().__init__()
         self.initUI()
 
+    # this gets the board
     def getBoard(self):
         return self.board
 
+    # this gets the score board
     def getScoreBoard(self):
         return self.scoreBoard
 

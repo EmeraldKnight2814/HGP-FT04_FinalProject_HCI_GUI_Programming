@@ -8,30 +8,39 @@ class ScoreBoard(QDockWidget):
         super().__init__()
         self.initUI()
 
+    # initiates score board UI
     def initUI(self):
         '''initiates ScoreBoard UI'''
         self.resize(200, 200)
         self.center()
         self.setWindowTitle('ScoreBoard')
+
         #create a widget to hold other widgets
         self.mainWidget = QWidget()
         self.mainLayout = QVBoxLayout()
 
-        #a button that will pass the turn if clicked once and end the game if clicked twice
+        # a button that will pass the turn if clicked once and end the game if clicked twice
         self.pass_button = QPushButton("Pass")
         self.pass_button.pressed.connect(self.passTurn)
+
+        # this button starts the game
         self.start_button = QPushButton("Start")
         self.start_button.pressed.connect(self.startGame)
+
+        # this button resets the game
         self.reset_button = QPushButton("Reset")
         self.reset_button.pressed.connect(self.reset)
+
+        # this button lets the user see the rules
         self.see_rules = QPushButton("See Rules")
         self.see_rules.pressed.connect(self.seeRule)
 
-        #create two labels which will be updated by signals
+        # creates the labels which will be updated by signals
         self.label_clickLocation = QLabel("Click Location: ")
         self.label_timeRemaining = QLabel("Time remaining: ")
         self.label_playerTurn = QLabel("Players Turn: ")
         self.label_playerPoints = QLabel("Player Points: ")
+
         self.mainWidget.setLayout(self.mainLayout)
         self.mainLayout.addWidget(self.label_clickLocation)
         self.mainLayout.addWidget(self.pass_button)
@@ -58,7 +67,7 @@ class ScoreBoard(QDockWidget):
         self.label_clickLocation.setText("Click Location:" + clickLoc)
         print('slot ' + clickLoc)
 
-    @pyqtSlot(int)
+    @pyqtSlot(int) # this updates the timer and shows the time remaining
     def setTimeRemaining(self, timeRemainng):
         '''updates the time remaining label to show the time remaining'''
         update = "Time Remaining: " + str(timeRemainng)
@@ -66,27 +75,28 @@ class ScoreBoard(QDockWidget):
         print('slot '+update)
         # self.redraw()
 
+    # this shows whose turn it is
     def setPlayersTurn(self, turn):
         '''updates the label to show the players turn'''
         self.label_playerTurn.setText("Player Turn:" + "")
         print('slot ' + '')
 
+    # this updates the label to show the player points
     def setPlayerPoints(self, point):
-        '''updates the label to show the players turn'''
         self.label_playerPoints.setText("Player Points:" + "")
         print('slot ' + '')
 
+    # this allows the game to end if the button is clicked twice
     def passTurn(self):
         print("pass")
         # TODO: Write code to say that if the button is clicked twice it ends the game and puts up a dialog box
 
-
-
-
+    # this starts the game and the timer
     def startGame(self):
         print("Start")
             # TODO: Write start sequence
 
+    # this shows the rules and how to play the game
     def seeRule(self):
         ruleBox = QMessageBox(self)
         ruleBox.setText("How to play/rules: Go is played by two players, called Black and White. The "
@@ -112,7 +122,7 @@ class ScoreBoard(QDockWidget):
                         " This rule prevents players from endlessly capturing and recapturing a stone, back and forth.")
         ruleBox.exec()
 
+    # this resets the game
     def reset(self):
         print("Reset")
         # TODO: write reset code
-        
