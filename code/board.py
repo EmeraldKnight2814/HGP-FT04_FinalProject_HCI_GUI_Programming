@@ -26,13 +26,13 @@ class Board(QFrame):  # base the board on a QFrame widget
         self.timer = QBasicTimer()  # create a timer for the game
         self.isStarted = False      # game is not currently started
 
-        self.boardArray = [[0, 0, 0, 0, 0, 0, 0],
-                           [0, 0, 0, 0, 0, 0, 0],
-                           [0, 0, 0, 0, 0, 0, 0],
-                           [0, 0, 0, 0, 0, 0, 0],
-                           [0, 0, 0, 0, 0, 0, 0],
-                           [0, 0, 0, 0, 0, 0, 0],
-                           [0, 0, 0, 0, 0, 0, 0]]
+        self.boardArray = [[Piece(0,0,0), Piece(0,1,0), Piece(0,2,0), Piece(0,3,0), Piece(0,4,0), Piece(0,5,0), Piece(0,6,0)],
+                           [Piece(0,0,1), Piece(0,1,1), Piece(0,2,1), Piece(0,3,1), Piece(0,4,1), Piece(0,5,1), Piece(0,6,1)],
+                           [Piece(0,0,2), Piece(0,1,2), Piece(0,2,2), Piece(0,3,2), Piece(0,4,2), Piece(0,5,2), Piece(0,6,2)],
+                           [Piece(0,0,3), Piece(0,1,3), Piece(0,2,3), Piece(0,3,3), Piece(0,4,3), Piece(0,5,3), Piece(0,6,3)],
+                           [Piece(0,0,4), Piece(0,1,4), Piece(0,2,4), Piece(0,3,4), Piece(0,4,4), Piece(0,5,4), Piece(0,6,4)],
+                           [Piece(0,0,5), Piece(0,1,5), Piece(0,2,5), Piece(0,3,5), Piece(0,4,5), Piece(0,5,5), Piece(0,6,5)],
+                           [Piece(0,0,6), Piece(0,1,6), Piece(0,2,6), Piece(0,3,6), Piece(0,4,6), Piece(0,5,6), Piece(0,6,6)]]
 
         self.start()                # start the game which will start the timer
         self.setStyleSheet("background-color: black;")
@@ -48,6 +48,19 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def mousePosToColRow(self, event):
         '''convert the mouse click event to a row and column'''
+        # (x - 1/2 width) / width
+        closest_x = int((event.position().x() - self.squareWidth() / 2) / self.squareWidth())
+        if (closest_x >= 7):
+            closest_x = 6
+        # (y - 1/2 height) / height
+        closest_y = int((event.position().y() - self.squareHeight() / 2) / self.squareHeight())
+        if (closest_y >= 7):
+            closest_y = 6
+
+
+        print("changing piece")
+        self.boardArray[closest_y][closest_x].setPiece(self.current_player)
+        print(self.boardArray[closest_y][closest_x].getPiece())
 
     def squareWidth(self):
         '''returns the width of one square in the board'''
@@ -89,23 +102,20 @@ class Board(QFrame):  # base the board on a QFrame widget
         clickLoc = "["+str(event.position().x())+","+str(event.position().y())+"]"     # the location where a mouse click was registered
         print("mousePressEvent() - "+clickLoc)
 
-        closest_x = int((event.position().x() - self.squareWidth() / 2) / self.squareWidth())
-        if(closest_x >= 7):
-            closest_x = 6
-        print(closest_x)
-        closest_y = int((event.position().y() - self.squareHeight() / 2)/ self.squareHeight())
-        if (closest_y >= 7):
-            closest_y = 6
-        print(closest_y)
-
-        print("testing board array")
-        self.boardArray[closest_y][closest_x] = self.current_player
-        print(self.boardArray)
+        self.mousePosToColRow(event)
 
         painter = QPainter(self)
         self.drawPieces(painter)
-
         self.update()
+
+        # switch players
+        # NOTE: I would like to change this to Match/Case, however my machine is only capable of Python 3.9 at this time.
+        if(self.current_player == 1):
+            self.current_player = 2
+        elif(self.current_player == 2):
+            self.current_player = 1
+        else:
+            self.current_player = 1
 
         self.clickLocationSignal.emit(clickLoc)
 
@@ -116,7 +126,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         # reset array to full transparent:
         for row in range(0, len(self.boardArray)):
             for col in range(0, len(self.boardArray[0])):
-                self.boardArray[row][col] = 0
+                self.boardArray[row][col].setPiece(0)
 
         #call piece drawing function
         painter = QPainter(self)
@@ -173,15 +183,15 @@ class Board(QFrame):  # base the board on a QFrame widget
             for col in range(0, len(self.boardArray[0])):
                 painter.save()
 
-                if(self.boardArray[row][col] == 0):
+                if(self.boardArray[row][col].getPiece() == 0):
                     colour = Qt.GlobalColor.transparent  # empty square could be modeled with transparent pieces
                     brush = QBrush(Qt.BrushStyle.SolidPattern)
                     brush.setColor(colour)
-                elif(self.boardArray[row][col] == 1):
+                elif(self.boardArray[row][col].getPiece() == 1):
                     colour = Qt.GlobalColor.black  # empty square could be modeled with transparent pieces
                     brush = QBrush(Qt.BrushStyle.SolidPattern)
                     brush.setColor(colour)
-                elif (self.boardArray[row][col] == 2):
+                elif (self.boardArray[row][col].getPiece() == 2):
                     colour = Qt.GlobalColor.white  # empty square could be modeled with transparent pieces
                     brush = QBrush(Qt.BrushStyle.SolidPattern)
                     brush.setColor(colour)
