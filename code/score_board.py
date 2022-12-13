@@ -64,7 +64,7 @@ class ScoreBoard(QDockWidget):
     @pyqtSlot(str) # checks to make sure that the following slot is receiving an argument of the type 'int'
     def setClickLocation(self, clickLoc):
         '''updates the label to show the click location'''
-        self.label_clickLocation.setText("Click Location:" + clickLoc)
+        self.label_clickLocation.setText("Click Location:" + "\n" + clickLoc)
         print('slot ' + clickLoc)
 
     @pyqtSlot(int) # this updates the timer and shows the time remaining

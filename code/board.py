@@ -13,6 +13,8 @@ class Board(QFrame):  # base the board on a QFrame widget
     timerSpeed  = 1000     # the timer updates every 1 second
     counter     = 100    # the number the counter will count down from
 
+    current_player = 1
+
     def __init__(self, parent):
         super().__init__(parent)
         self.initBoard()
@@ -24,7 +26,13 @@ class Board(QFrame):  # base the board on a QFrame widget
         self.start()                # start the game which will start the timer
         self.setStyleSheet("background-color: black;")
 
-        self.boardArray =[[0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6], [0, 1, 2, 3, 4, 5, 6]]        # TODO - create a 2d int/Piece array to store the state of the game
+        self.boardArray =[[0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0]]        # TODO - create a 2d int/Piece array to store the state of the game
         self.printBoardArray()
 
     def printBoardArray(self):
@@ -72,9 +80,27 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def mousePressEvent(self, event):
         '''this event is automatically called when the mouse is pressed'''
-        clickLoc = "click location ["+str(event.position().x())+","+str(event.position().y())+"]"     # the location where a mouse click was registered
+        clickLoc = "["+str(event.position().x())+","+str(event.position().y())+"]"     # the location where a mouse click was registered
         print("mousePressEvent() - "+clickLoc)
-        # TODO you could call some game logic here
+
+        closest_x = int((event.position().x() - self.squareWidth() / 2) / self.squareWidth())
+        if(closest_x >= 7):
+            closest_x = 6
+        print(closest_x)
+        closest_y = int((event.position().y() - self.squareHeight() / 2)/ self.squareHeight())
+        if (closest_y >= 7):
+            closest_y = 6
+        print(closest_y)
+
+        print("testing board array")
+        self.boardArray[closest_y][closest_x] = self.current_player
+        print(self.boardArray)
+
+        painter = QPainter(self)
+        self.drawPieces(painter)
+
+        self.update()
+
         self.clickLocationSignal.emit(clickLoc)
 
     def resetGame(self):
@@ -126,13 +152,27 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def drawPieces(self, painter):
         '''draw the prices on the board'''
-        colour = Qt.GlobalColor.transparent # empty square could be modeled with transparent pieces
-        brush = QBrush(Qt.BrushStyle.SolidPattern)
-        brush.setColor(colour)
 
         for row in range(0, len(self.boardArray)):
             for col in range(0, len(self.boardArray[0])):
                 painter.save()
+
+                if(self.boardArray[row][col] == 0):
+                    colour = Qt.GlobalColor.transparent  # empty square could be modeled with transparent pieces
+                    brush = QBrush(Qt.BrushStyle.SolidPattern)
+                    brush.setColor(colour)
+                elif(self.boardArray[row][col] == 1):
+                    colour = Qt.GlobalColor.black  # empty square could be modeled with transparent pieces
+                    brush = QBrush(Qt.BrushStyle.SolidPattern)
+                    brush.setColor(colour)
+                elif (self.boardArray[row][col] == 2):
+                    colour = Qt.GlobalColor.white  # empty square could be modeled with transparent pieces
+                    brush = QBrush(Qt.BrushStyle.SolidPattern)
+                    brush.setColor(colour)
+                else:
+                    colour = Qt.GlobalColor.transparent  # empty square could be modeled with transparent pieces
+                    brush = QBrush(Qt.BrushStyle.SolidPattern)
+                    brush.setColor(colour)
                 # set transformation so that each piece is on an intersection
                 colTransformation = self.squareWidth() * col + (self.squareWidth() * .75)
                 rowTransformation = self.squareHeight() * row + (self.squareHeight() * .75)
