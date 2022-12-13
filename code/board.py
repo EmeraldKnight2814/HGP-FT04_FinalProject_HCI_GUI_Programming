@@ -13,6 +13,8 @@ class Board(QFrame):  # base the board on a QFrame widget
     timerSpeed  = 1000     # the timer updates every 1 second
     counter     = 100    # the number the counter will count down from
 
+    times_reset = -1
+
     current_player = 1
 
     def __init__(self, parent):
@@ -23,17 +25,21 @@ class Board(QFrame):  # base the board on a QFrame widget
         '''initiates board'''
         self.timer = QBasicTimer()  # create a timer for the game
         self.isStarted = False      # game is not currently started
+
+        self.boardArray = [[0, 0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0, 0]]
+
         self.start()                # start the game which will start the timer
         self.setStyleSheet("background-color: black;")
-
-        self.boardArray =[[0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0]]        # TODO - create a 2d int/Piece array to store the state of the game
         self.printBoardArray()
+
+    def make_connection(self, score_board):
+        score_board.resetSignal.connect(self.resetGame)
 
     def printBoardArray(self):
         '''prints the boardArray in an attractive way'''
@@ -54,7 +60,7 @@ class Board(QFrame):  # base the board on a QFrame widget
     def start(self):
         '''starts game'''
         self.isStarted = True                       # set the boolean which determines if the game has started to TRUE
-        self.resetGame()                            # reset the game
+        self.resetGame(1)                            # reset the game
         self.timer.start(self.timerSpeed, self)     # start the timer with the correct speed
         print("start () - timer is started")
 
@@ -103,9 +109,19 @@ class Board(QFrame):  # base the board on a QFrame widget
 
         self.clickLocationSignal.emit(clickLoc)
 
-    def resetGame(self):
+    def resetGame(self, signal):
         '''clears pieces from the board'''
-        # TODO write code to reset game
+        # add times reset
+        self.times_reset += signal
+        # reset array to full transparent:
+        for row in range(0, len(self.boardArray)):
+            for col in range(0, len(self.boardArray[0])):
+                self.boardArray[row][col] = 0
+
+        #call piece drawing function
+        painter = QPainter(self)
+        self.drawPieces(painter)
+
 
     def tryMove(self, newX, newY):
         '''tries to move a piece'''
