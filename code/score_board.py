@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import * #TODO import additional Widget classes as desired
+from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 
 class ScoreBoard(QDockWidget):
@@ -80,12 +80,15 @@ class ScoreBoard(QDockWidget):
         print("pass")
         # TODO: Write code to say that if the button is clicked twice it ends the game and puts up a dialog box
 
+
+
+
     def startGame(self):
         print("Start")
             # TODO: Write start sequence
 
     def seeRule(self):
-        ruleBox= QMessageBox(self)
+        ruleBox = QMessageBox(self)
         ruleBox.setText("How to play/rules: Go is played by two players, called Black and White. The "
                         "lines of the board have intersections wherever they cross or touch each other. "
                         "Each intersection is called a point. Intersections at the four corners and the edges of the "
@@ -112,3 +115,4 @@ class ScoreBoard(QDockWidget):
     def reset(self):
         print("Reset")
         # TODO: write reset code
+        
