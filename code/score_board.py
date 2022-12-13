@@ -3,6 +3,7 @@ from PyQt6.QtCore import *
 
 class ScoreBoard(QDockWidget):
     '''# base the score_board on a QDockWidget'''
+    resetSignal = pyqtSignal(int)
 
     def __init__(self):
         super().__init__()
@@ -125,4 +126,4 @@ class ScoreBoard(QDockWidget):
     # this resets the game
     def reset(self):
         print("Reset")
-        # TODO: write reset code
+        self.resetSignal.emit(1)
