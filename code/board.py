@@ -44,7 +44,7 @@ class Board(QFrame):  # base the board on a QFrame widget
     def printBoardArray(self):
         '''prints the boardArray in an attractive way'''
         print("boardArray:")
-        print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in self.boardArray]))
+        print('\n'.join(['\t'.join([str(cell.getPiece()) for cell in row]) for row in self.boardArray]))
 
     def mousePosToColRow(self, event):
         '''convert the mouse click event to a row and column'''
@@ -57,10 +57,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         if (closest_y >= 7):
             closest_y = 6
 
-
-        print("changing piece")
-        self.boardArray[closest_y][closest_x].setPiece(self.current_player)
-        print(self.boardArray[closest_y][closest_x].getPiece())
+        self.tryMove(closest_x, closest_y)
 
     def squareWidth(self):
         '''returns the width of one square in the board'''
@@ -108,15 +105,6 @@ class Board(QFrame):  # base the board on a QFrame widget
         self.drawPieces(painter)
         self.update()
 
-        # switch players
-        # NOTE: I would like to change this to Match/Case, however my machine is only capable of Python 3.9 at this time.
-        if(self.current_player == 1):
-            self.current_player = 2
-        elif(self.current_player == 2):
-            self.current_player = 1
-        else:
-            self.current_player = 1
-
         self.clickLocationSignal.emit(clickLoc)
 
     def resetGame(self, signal):
@@ -135,6 +123,37 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def tryMove(self, newX, newY):
         '''tries to move a piece'''
+        #check if piece is already unoccupied:
+        if(self.boardArray[newY][newX].getPiece() == 0):
+            # Check if neighboring pieces are empty
+            liberties = 0
+            # Piece to the immediate right
+            if (self.boardArray[newY][newX + 1].getPiece() == 0 or self.boardArray[newY][newX + 1].getPiece() == self.current_player):
+                liberties += 1
+            # Piece to the immediate left
+            elif (self.boardArray[newY][newX - 1].getPiece() == 0 or self.boardArray[newY][newX - 1].getPiece() == self.current_player):
+                liberties += 1
+            # Piece immediately above
+            elif (self.boardArray[newY + 1][newX].getPiece() == 0 or self.boardArray[newY + 1][newX].getPiece() == self.current_player):
+                liberties += 1
+            # Piece immediately below
+            elif (self.boardArray[newY - 1][newX].getPiece() == 0 or self.boardArray[newY - 1][newX].getPiece() == self.current_player):
+                liberties += 1
+
+            if(liberties > 0):
+                self.boardArray[newY][newX].setPiece(self.current_player)
+                self.boardArray[newY][newX].setLiberties(liberties)
+
+                # switch players
+                # NOTE: I would like to change this to Match/Case, however my machine is only capable of Python 3.9 at this time.
+                if (self.current_player == 1):
+                    self.current_player = 2
+                elif (self.current_player == 2):
+                    self.current_player = 1
+                else:
+                    self.current_player = 1
+        else:
+            print("There is already a piece at (" + str(newX) + ", " + str(newY) + ")")
 
     def drawBoardSquares(self, painter):
         '''draw all the square on the board'''

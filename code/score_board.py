@@ -3,7 +3,8 @@ from PyQt6.QtCore import *
 
 class ScoreBoard(QDockWidget):
     '''# base the score_board on a QDockWidget'''
-    resetSignal = pyqtSignal(int)
+    resetSignal = pyqtSignal(int) # Signal sent when reset button is pressed
+    startSignal = pyqtSignal(int) # Signal sent when start button is pressed
 
     def __init__(self):
         super().__init__()
