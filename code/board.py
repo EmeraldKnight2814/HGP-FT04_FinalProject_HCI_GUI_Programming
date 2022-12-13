@@ -43,7 +43,7 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def printBoardArray(self):
         '''prints the boardArray in an attractive way'''
-        print("boardArray:")
+        print("Board Array:")
         print('\n'.join(['\t'.join([str(cell.getPiece()) for cell in row]) for row in self.boardArray]))
 
     def mousePosToColRow(self, event):
@@ -116,6 +116,8 @@ class Board(QFrame):  # base the board on a QFrame widget
             for col in range(0, len(self.boardArray[0])):
                 self.boardArray[row][col].setPiece(0)
 
+        self.updateLiberties()
+
         #call piece drawing function
         painter = QPainter(self)
         self.drawPieces(painter)
@@ -142,7 +144,7 @@ class Board(QFrame):  # base the board on a QFrame widget
 
             if(liberties > 0):
                 self.boardArray[newY][newX].setPiece(self.current_player)
-                self.boardArray[newY][newX].setLiberties(liberties)
+                self.updateLiberties()
 
                 # switch players
                 # NOTE: I would like to change this to Match/Case, however my machine is only capable of Python 3.9 at this time.
@@ -154,6 +156,109 @@ class Board(QFrame):  # base the board on a QFrame widget
                     self.current_player = 1
         else:
             print("There is already a piece at (" + str(newX) + ", " + str(newY) + ")")
+
+    def updateLiberties(self):
+        for row in range(0, len(self.boardArray)):
+            for col in range(0, len(self.boardArray[0])):
+                liberties = 0
+                # Top left corner
+                if(row == 0 and col == 0):
+                    if(self.boardArray[col][row + 1].getPiece() == 0):
+                        liberties += 1
+                    if(self.boardArray[col + 1][row].getPiece() == 0):
+                        liberties += 1
+                    # add liberties to array
+                    self.boardArray[row][col].setLiberties(liberties)
+
+                # Bottom left corner
+                elif(row == 6 and col == 0):
+                    if(self.boardArray[col][row - 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col + 1][row].getPiece() == 0):
+                        liberties += 1
+                    # add liberties to array
+                    self.boardArray[row][col].setLiberties(liberties)
+
+                # Top right corner
+                elif (row == 0 and col == 6):
+                    if (self.boardArray[col][row + 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col - 1][row].getPiece() == 0):
+                        liberties += 1
+                    # add liberties to array
+                    self.boardArray[row][col].setLiberties(liberties)
+
+                # Bottom right corner
+                elif (row == 6 and col == 6):
+                    if (self.boardArray[col][row - 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col - 1][row].getPiece() == 0):
+                        liberties += 1
+                    # add liberties to array
+                    self.boardArray[row][col].setLiberties(liberties)
+
+                # Top row
+                elif (row == 0):
+                    if (self.boardArray[col][row + 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col + 1][row].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col - 1][row].getPiece() == 0):
+                        liberties += 1
+                    # add liberties to array
+                    self.boardArray[row][col].setLiberties(liberties)
+
+                # Bottom row
+                elif (row == 6):
+                    if (self.boardArray[col][row - 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col + 1][row].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col - 1][row].getPiece() == 0):
+                        liberties += 1
+                    # add liberties to array
+                    self.boardArray[row][col].setLiberties(liberties)
+
+                # Leftmost column
+                elif (col == 0):
+                    if (self.boardArray[col][row + 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col][row - 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col + 1][row].getPiece() == 0):
+                        liberties += 1
+                    # add liberties to array
+                    self.boardArray[row][col].setLiberties(liberties)
+
+                # Rightmost column
+                elif (col == 6):
+                    if (self.boardArray[col][row + 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col][row - 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col - 1][row].getPiece() == 0):
+                        liberties += 1
+                    # add liberties to array
+                    self.boardArray[row][col].setLiberties(liberties)
+
+                # Everywhere in between
+                else:
+                    if (self.boardArray[col][row + 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col][row - 1].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col + 1][row].getPiece() == 0):
+                        liberties += 1
+                    if (self.boardArray[col - 1][row].getPiece() == 0):
+                        liberties += 1
+                    # add liberties to array
+                    self.boardArray[row][col].setLiberties(liberties)
+
+        self.printLiberties()
+
+    def printLiberties(self):
+        print("Liberties:")
+        print('\n'.join(['\t'.join([str(cell.getLiberties()) for cell in row]) for row in self.boardArray]))
 
     def drawBoardSquares(self, painter):
         '''draw all the square on the board'''
