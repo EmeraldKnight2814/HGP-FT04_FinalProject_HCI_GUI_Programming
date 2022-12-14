@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from board import *
 from score_board import *
+from game_logic import *
 
 class Go(QMainWindow):
 
@@ -17,14 +18,19 @@ class Go(QMainWindow):
     def getScoreBoard(self):
         return self.scoreBoard
 
+    # this gets game logic
+    def getGameLogic(self):
+        return self.gameLogic
     def initUI(self):
         '''initiates application UI'''
         self.board = Board(self)
         self.setCentralWidget(self.board)
         self.scoreBoard = ScoreBoard()
         self.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.scoreBoard)
+        self.gameLogic = GameLogic()
         self.scoreBoard.make_connection(self.board)
         self.board.make_connection(self.scoreBoard)
+        self.gameLogic.make_connection(self.board)
 
         self.resize(800, 600)
         self.center()

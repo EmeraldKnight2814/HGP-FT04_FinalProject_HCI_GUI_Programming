@@ -141,12 +141,12 @@ class Board(QFrame):  # base the board on a QFrame widget
             # Top Left Corner
             if(newX == 0 and newY == 0):
                 # check liberties
-                if(self.boardArray[newY - 1][newX].getPiece() == 0):
+                if(self.boardArray[newY + 1][newX].getPiece() == 0):
                     liberties += 1
                 if (self.boardArray[newY][newX + 1].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if(self.boardArray[newY - 1][newX].getPiece() == self.current_player):
+                if(self.boardArray[newY + 1][newX].getPiece() == self.current_player):
                     allies += 1
                 if (self.boardArray[newY][newX + 1].getPiece() == self.current_player):
                     allies += 1
