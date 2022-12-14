@@ -113,7 +113,7 @@ class Board(QFrame):  # base the board on a QFrame widget
     def resetGame(self, signal):
         '''clears pieces from the board'''
         # add times reset
-        print("THis is reset")
+        print("This is reset")
         self.times_reset += signal
         # reset array to full transparent:
         for row in range(0, len(self.boardArray)):
