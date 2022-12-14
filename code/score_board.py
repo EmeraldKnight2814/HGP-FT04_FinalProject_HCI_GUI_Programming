@@ -103,6 +103,9 @@ class ScoreBoard(QDockWidget):
         print("Start")
             # TODO: Write start sequence
 
+    # this connects the start sequence from board to this one for speed go
+    # TODO: Connect the signal from board for the start button made
+
     # this shows the rules and how to play the game
     def seeRule(self):
         ruleBox = QMessageBox(self)
