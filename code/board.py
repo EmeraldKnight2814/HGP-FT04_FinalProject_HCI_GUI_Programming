@@ -23,6 +23,7 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def initBoard(self):
         '''initiates board'''
+
         self.timer = QBasicTimer()  # create a timer for the game
         self.isStarted = False      # game is not currently started
 
@@ -40,6 +41,8 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def make_connection(self, score_board):
         score_board.resetSignal.connect(self.resetGame)
+        print("is it working")
+
 
     def printBoardArray(self):
         '''prints the boardArray in an attractive way'''
@@ -110,6 +113,7 @@ class Board(QFrame):  # base the board on a QFrame widget
     def resetGame(self, signal):
         '''clears pieces from the board'''
         # add times reset
+        print("THis is reset")
         self.times_reset += signal
         # reset array to full transparent:
         for row in range(0, len(self.boardArray)):
