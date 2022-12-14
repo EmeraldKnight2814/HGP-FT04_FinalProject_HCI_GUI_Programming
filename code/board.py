@@ -11,7 +11,7 @@ class Board(QFrame):  # base the board on a QFrame widget
     boardWidth  = 8     # board is 8 squares wide
     boardHeight = 8     # board is 8 squares tall
     timerSpeed  = 1000     # the timer updates every 1 second
-    counter     = 100    # the number the counter will count down from
+    counter     = 120    # the number the counter will count down from
 
     times_reset = -1
 
@@ -113,7 +113,7 @@ class Board(QFrame):  # base the board on a QFrame widget
     def resetGame(self, signal):
         '''clears pieces from the board'''
         # add times reset
-        print("THis is reset")
+        print("This is reset")
         self.times_reset += signal
         # reset array to full transparent:
         for row in range(0, len(self.boardArray)):
@@ -126,6 +126,8 @@ class Board(QFrame):  # base the board on a QFrame widget
         painter = QPainter(self)
         self.drawPieces(painter)
 
+        self.update()
+
 
     def tryMove(self, newX, newY):
         '''tries to move a piece'''
@@ -135,146 +137,151 @@ class Board(QFrame):  # base the board on a QFrame widget
             liberties = 0
             allies = 0
 
+            print("Testing which piece")
             # Top Left Corner
             if(newX == 0 and newY == 0):
                 # check liberties
-                if(self.boardArray[newY - 1][newX].getPiece == 0):
+                if(self.boardArray[newY - 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX + 1].getPiece == 0):
+                if (self.boardArray[newY][newX + 1].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if(self.boardArray[newY - 1][newX].getPiece == self.current_player):
+                if(self.boardArray[newY - 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX + 1].getPiece == self.current_player):
+                if (self.boardArray[newY][newX + 1].getPiece() == self.current_player):
                     allies += 1
 
             # Top Right corner
             elif(newX == 6 and newY == 0):
                 # check liberties
-                if (self.boardArray[newY + 1][newX].getPiece == 0):
+                if (self.boardArray[newY + 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX - 1].getPiece == 0):
+                if (self.boardArray[newY][newX - 1].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if (self.boardArray[newY + 1][newX].getPiece == self.current_player):
+                if (self.boardArray[newY + 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX - 1].getPiece == self.current_player):
+                if (self.boardArray[newY][newX - 1].getPiece() == self.current_player):
                     allies += 1
 
             # Bottom Left corner
             elif(newX == 0 and newY == 6):
                 # check liberties
-                if (self.boardArray[newY - 1][newX].getPiece == 0):
+                if (self.boardArray[newY - 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX + 1].getPiece == 0):
+                if (self.boardArray[newY][newX + 1].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if (self.boardArray[newY - 1][newX].getPiece == self.current_player):
+                if (self.boardArray[newY - 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX + 1].getPiece == self.current_player):
+                if (self.boardArray[newY][newX + 1].getPiece() == self.current_player):
                     allies += 1
 
             # Bottom Right corner
             elif(newX == 6 and newY == 6):
                 # check liberties
-                if (self.boardArray[newY - 1][newX].getPiece == 0):
+                if (self.boardArray[newY - 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX - 1].getPiece == 0):
+                if (self.boardArray[newY][newX - 1].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if (self.boardArray[newY - 1][newX].getPiece == self.current_player):
+                if (self.boardArray[newY - 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX - 1].getPiece == self.current_player):
+                if (self.boardArray[newY][newX - 1].getPiece() == self.current_player):
                     allies += 1
 
             # Top Row
             elif(newY == 0):
                 # check liberties
-                if (self.boardArray[newY + 1][newX].getPiece == 0):
+                if (self.boardArray[newY + 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX + 1].getPiece == 0):
+                if (self.boardArray[newY][newX + 1].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX - 1].getPiece == 0):
+                if (self.boardArray[newY][newX - 1].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if (self.boardArray[newY + 1][newX].getPiece == self.current_player):
+                if (self.boardArray[newY + 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX + 1].getPiece == self.current_player):
+                if (self.boardArray[newY][newX + 1].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX - 1].getPiece == self.current_player):
+                if (self.boardArray[newY][newX - 1].getPiece() == self.current_player):
                     allies += 1
 
             # Bottom row
             elif(newY == 6):
                 # check liberties
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY - 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY][newX + 1].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY][newX - 1].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY - 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY][newX + 1].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY][newX + 1].getPiece() == self.current_player):
                     allies += 1
 
             # Leftmost Column
             elif(newX == 0):
                 # check liberties
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY][newX + 1].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY + 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY - 1][newX].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY][newX + 1].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY + 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY - 1][newX].getPiece() == self.current_player):
                     allies += 1
 
             # Rightmost column
             elif(newX == 6):
                 # check liberties
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY][newX - 1].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY + 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY - 1][newX].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY][newX - 1].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY + 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY - 1][newX].getPiece() == self.current_player):
                     allies += 1
 
             # Everywhere in between
             else:
                 # check liberties
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY + 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY - 1][newX].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY][newX + 1].getPiece() == 0):
                     liberties += 1
-                if (self.boardArray[newY][newX].getPiece == 0):
+                if (self.boardArray[newY][newX - 1].getPiece() == 0):
                     liberties += 1
                 # check allies
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY + 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY - 1][newX].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY][newX + 1].getPiece() == self.current_player):
                     allies += 1
-                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                if (self.boardArray[newY][newX - 1].getPiece() == self.current_player):
                     allies += 1
+
+
+            print("Liberties found: " + str(liberties))
+            print("Allies found: " + str(allies))
 
             if(liberties > 0 or allies > 0):
                 self.boardArray[newY][newX].setPiece(self.current_player)
