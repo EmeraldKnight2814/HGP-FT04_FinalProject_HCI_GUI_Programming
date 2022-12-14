@@ -26,8 +26,12 @@ class ScoreBoard(QDockWidget):
         self.pass_button.pressed.connect(self.passTurn)
 
         # this button starts the game
-        self.start_button = QPushButton("Start")
+        self.start_button = QPushButton("Start Go")
         self.start_button.pressed.connect(self.startGame)
+
+        # extra feature of speed go starts here
+        self.start_speed = QPushButton("Start Speed Go")
+        self.start_speed.pressed.connect(self.startGame)
 
         # this button resets the game
         self.reset_button = QPushButton("Reset")
@@ -47,6 +51,7 @@ class ScoreBoard(QDockWidget):
         self.mainLayout.addWidget(self.label_clickLocation)
         self.mainLayout.addWidget(self.pass_button)
         self.mainLayout.addWidget(self.start_button)
+        self.mainLayout.addWidget(self.start_speed)
         self.mainLayout.addWidget(self.see_rules)
         self.mainLayout.addWidget(self.reset_button)
         self.mainLayout.addWidget(self.label_timeRemaining)
@@ -97,6 +102,9 @@ class ScoreBoard(QDockWidget):
     def startGame(self):
         print("Start")
             # TODO: Write start sequence
+
+    # this connects the start sequence from board to this one for speed go
+    # TODO: Connect the signal from board for the start button made
 
     # this shows the rules and how to play the game
     def seeRule(self):
