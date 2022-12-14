@@ -133,20 +133,150 @@ class Board(QFrame):  # base the board on a QFrame widget
         if(self.boardArray[newY][newX].getPiece() == 0):
             # Check if neighboring pieces are empty
             liberties = 0
-            # Piece to the immediate right
-            if (self.boardArray[newY][newX + 1].getPiece() == 0 or self.boardArray[newY][newX + 1].getPiece() == self.current_player):
-                liberties += 1
-            # Piece to the immediate left
-            elif (self.boardArray[newY][newX - 1].getPiece() == 0 or self.boardArray[newY][newX - 1].getPiece() == self.current_player):
-                liberties += 1
-            # Piece immediately above
-            elif (self.boardArray[newY + 1][newX].getPiece() == 0 or self.boardArray[newY + 1][newX].getPiece() == self.current_player):
-                liberties += 1
-            # Piece immediately below
-            elif (self.boardArray[newY - 1][newX].getPiece() == 0 or self.boardArray[newY - 1][newX].getPiece() == self.current_player):
-                liberties += 1
+            allies = 0
 
-            if(liberties > 0):
+            # Top Left Corner
+            if(newX == 0 and newY == 0):
+                # check liberties
+                if(self.boardArray[newY - 1][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX + 1].getPiece == 0):
+                    liberties += 1
+                # check allies
+                if(self.boardArray[newY - 1][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX + 1].getPiece == self.current_player):
+                    allies += 1
+
+            # Top Right corner
+            elif(newX == 6 and newY == 0):
+                # check liberties
+                if (self.boardArray[newY + 1][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX - 1].getPiece == 0):
+                    liberties += 1
+                # check allies
+                if (self.boardArray[newY + 1][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX - 1].getPiece == self.current_player):
+                    allies += 1
+
+            # Bottom Left corner
+            elif(newX == 0 and newY == 6):
+                # check liberties
+                if (self.boardArray[newY - 1][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX + 1].getPiece == 0):
+                    liberties += 1
+                # check allies
+                if (self.boardArray[newY - 1][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX + 1].getPiece == self.current_player):
+                    allies += 1
+
+            # Bottom Right corner
+            elif(newX == 6 and newY == 6):
+                # check liberties
+                if (self.boardArray[newY - 1][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX - 1].getPiece == 0):
+                    liberties += 1
+                # check allies
+                if (self.boardArray[newY - 1][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX - 1].getPiece == self.current_player):
+                    allies += 1
+
+            # Top Row
+            elif(newY == 0):
+                # check liberties
+                if (self.boardArray[newY + 1][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX + 1].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX - 1].getPiece == 0):
+                    liberties += 1
+                # check allies
+                if (self.boardArray[newY + 1][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX + 1].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX - 1].getPiece == self.current_player):
+                    allies += 1
+
+            # Bottom row
+            elif(newY == 6):
+                # check liberties
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                # check allies
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+
+            # Leftmost Column
+            elif(newX == 0):
+                # check liberties
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                # check allies
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+
+            # Rightmost column
+            elif(newX == 6):
+                # check liberties
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                # check allies
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+
+            # Everywhere in between
+            else:
+                # check liberties
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                if (self.boardArray[newY][newX].getPiece == 0):
+                    liberties += 1
+                # check allies
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+                if (self.boardArray[newY][newX].getPiece == self.current_player):
+                    allies += 1
+
+            if(liberties > 0 or allies > 0):
                 self.boardArray[newY][newX].setPiece(self.current_player)
                 self.updateLiberties()
 
