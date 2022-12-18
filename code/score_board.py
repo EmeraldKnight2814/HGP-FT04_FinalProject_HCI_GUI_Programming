@@ -68,6 +68,10 @@ class ScoreBoard(QDockWidget):
         # when the updateTimerSignal is emitted in the board the setTimeRemaining slot receives it
         board.updateTimerSignal.connect(self.setTimeRemaining)
 
+    def game_connection(self, game_logic):
+        '''handles a signal sent from game logic class'''
+        print("logic connection made")
+
     @pyqtSlot(str) # checks to make sure that the following slot is receiving an argument of the type 'int'
     def setClickLocation(self, clickLoc):
         '''updates the label to show the click location'''

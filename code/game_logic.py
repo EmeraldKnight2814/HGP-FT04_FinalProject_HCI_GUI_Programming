@@ -13,5 +13,8 @@ class GameLogic:
     def checkAllies(self):
         print("allies")
 
+    def updateScore(self):
+        print("score")
+
     def checkCapture(self):
         print("capture")

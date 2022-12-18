@@ -30,6 +30,8 @@ class Go(QMainWindow):
         self.gameLogic = GameLogic()
         self.scoreBoard.make_connection(self.board)
         self.board.make_connection(self.scoreBoard)
+        self.scoreBoard.game_connection(self.gameLogic)
+        self.board.logic_connection(self.gameLogic)
         self.gameLogic.make_connection(self.board)
 
         self.resize(800, 600)

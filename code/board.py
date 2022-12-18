@@ -43,6 +43,9 @@ class Board(QFrame):  # base the board on a QFrame widget
         score_board.resetSignal.connect(self.resetGame)
         print("is it working")
 
+    def logic_connection(self, game_logic):
+        print("logic connected to board")
+
 
     def printBoardArray(self):
         '''prints the boardArray in an attractive way'''
