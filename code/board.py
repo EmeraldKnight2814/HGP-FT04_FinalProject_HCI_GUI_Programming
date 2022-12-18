@@ -42,15 +42,16 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def make_connection(self, score_board):
         score_board.resetSignal.connect(self.resetGame)
-        print("is it working")
 
     def logic_connection(self, game_logic):
-        game_logic.updateBoardSignal.connect(self.updateBoard)
+        game_logic.updateBoardSignal.connect(self.updateBoardState)
 
 
-    def updateBoard(self, boardArray, currentPlayer):
+    def updateBoardState(self, boardArray, currentPlayer):
+        print("Board state updating")
         self.boardArray = boardArray
         self.current_player = currentPlayer
+        print("Board state updated")
 
     def printBoardArray(self):
         '''prints the boardArray in an attractive way'''

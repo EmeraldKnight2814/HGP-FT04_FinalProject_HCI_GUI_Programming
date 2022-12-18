@@ -1,7 +1,9 @@
 from PyQt6.QtCore import *
+from piece import Piece
 
 class GameLogic(QObject):
     updateBoardSignal = pyqtSignal(list, int)
+
     created = False
     def __init__(self, parent):
         super().__init__(parent)
@@ -187,6 +189,412 @@ class GameLogic(QObject):
 
         return allies
 
+    def checkCapture(self, newX, newY, arrayIn, current_player, z):
+        updatedArray = arrayIn
+        print()
+        print(updatedArray[newX][newY].getPiece())
+        print()
+        #Check which player is enemy
+        if(current_player == 1):
+            enemy_player = 2
+        elif(current_player == 2):
+            enemy_player = 1
+        else:
+            enemy_player = 2
+
+        #top left corner
+        if (newX == 0 and newY == 0):
+            # check allies
+            if (updatedArray[newY + 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY + 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if(enemy_liberties == 0):
+                    if(enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX + 1].getPiece() == enemy_player):
+                enemy_x = newX + 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            else:
+                print("No captures")
+
+        # Top Right corner
+        elif (newX == 6 and newY == 0):
+            # check allies
+            if (updatedArray[newY + 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY + 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX - 1].getPiece() == enemy_player):
+                enemy_x = newX - 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            else:
+                print("No captures")
+
+        # Bottom Left corner
+        elif (newX == 0 and newY == 6):
+            # check allies
+            if (updatedArray[newY - 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY - 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX + 1].getPiece() == enemy_player):
+                enemy_x = newX + 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            else:
+                print("No captures")
+
+        # Bottom Right corner
+        elif (newX == 6 and newY == 6):
+            # check allies
+            if (updatedArray[newY - 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY - 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX - 1].getPiece() == enemy_player):
+                enemy_x = newX - 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            else:
+                print("No captures")
+
+        # Top Row
+        elif (newY == 0):
+            # check allies
+            if (updatedArray[newY + 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY + 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX + 1].getPiece() == enemy_player):
+                enemy_x = newX + 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX - 1].getPiece() == enemy_player):
+                enemy_x = newX - 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            else:
+                print("No captures")
+
+        # Bottom row
+        elif (newY == 6):
+            # check allies
+            if (updatedArray[newY - 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY - 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX + 1].getPiece() == enemy_player):
+                enemy_x = newX + 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX - 1].getPiece() == enemy_player):
+                enemy_x = newX - 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            else:
+                print("No captures")
+
+        # Leftmost Column
+        elif (newX == 0):
+            # check allies
+            if (updatedArray[newY][newX + 1].getPiece() == enemy_player):
+                enemy_x = newX + 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY + 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY + 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY - 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY - 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            else:
+                print("No captures")
+
+        # Rightmost column
+        elif (newX == 6):
+            # check allies
+            if (updatedArray[newY][newX - 1].getPiece() == enemy_player):
+                enemy_x = newX - 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY + 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY + 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY - 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY - 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            else:
+                print("No captures")
+
+        # Everywhere in between
+        else:
+            # check allies
+            if (updatedArray[newY + 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY + 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY - 1][newX].getPiece() == enemy_player):
+                enemy_x = newX
+                enemy_y = newY - 1
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX + 1].getPiece() == enemy_player):
+                enemy_x = newX + 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            elif (updatedArray[newY][newX - 1].getPiece() == enemy_player):
+                enemy_x = newX - 1
+                enemy_y = newY
+                enemy_allies = self.checkAllies(enemy_x, enemy_y, updatedArray, enemy_player)
+                enemy_liberties = self.checkLiberties(updatedArray, enemy_x, enemy_y)
+                if (enemy_liberties == 0):
+                    if (enemy_allies == (0 + z)):
+                        print("Capture")
+                        updatedArray[enemy_y][enemy_x].setPiece(0)
+                    else:
+                        z += 1
+                        updatedArray = self.checkCapture(enemy_x, enemy_y, updatedArray, current_player, z)
+                else:
+                    print("No captures")
+            else:
+                print("No captures")
+
+        return updatedArray
+
+
     def makeMove(self, newX, newY, arrayIn, current_player):
         print("signal recieved")
         '''tries to move a piece'''
@@ -203,6 +611,8 @@ class GameLogic(QObject):
                 arrayIn[newY][newX].setPiece(current_player)
                 arrayIn = self.updateLiberties(arrayIn)
 
+                boardArray = self.checkCapture(newX, newY, arrayIn, current_player, 0)
+
                 # switch players
                 # NOTE: I would like to change this to Match/Case, however my machine is only capable of Python 3.9 at this time.
                 if (current_player == 1):
@@ -211,7 +621,8 @@ class GameLogic(QObject):
                     current_player = 1
                 else:
                     current_player = 1
-                self.updateBoardSignal.emit(arrayIn, current_player)
+
+                self.updateBoardSignal.emit(boardArray, current_player)
         else:
             print("There is already a piece at (" + str(newX) + ", " + str(newY) + ")")
 
@@ -320,6 +731,3 @@ class GameLogic(QObject):
 
     def updateScore(self):
         print("score")
-
-    def checkCapture(self):
-        print("capture")
