@@ -21,13 +21,14 @@ class Go(QMainWindow):
     # this gets game logic
     def getGameLogic(self):
         return self.gameLogic
+
     def initUI(self):
         '''initiates application UI'''
         self.board = Board(self)
         self.setCentralWidget(self.board)
         self.scoreBoard = ScoreBoard()
         self.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.scoreBoard)
-        self.gameLogic = GameLogic()
+        self.gameLogic = GameLogic(self)
         self.scoreBoard.make_connection(self.board)
         self.board.make_connection(self.scoreBoard)
         self.scoreBoard.game_connection(self.gameLogic)
