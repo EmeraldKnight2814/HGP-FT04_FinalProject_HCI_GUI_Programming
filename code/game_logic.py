@@ -51,9 +51,9 @@ class GameLogic(QObject):
             # check liberties
             if (arrayIn[newY + 1][newX].getPiece() == 0):
                 liberties += 1
-            if (arrayIn[newY][newX + 1].getPiece() == 0):
-                liberties += 1
             if (arrayIn[newY][newX - 1].getPiece() == 0):
+                liberties += 1
+            if(arrayIn[newY][newX + 1].getPiece() == 0):
                 liberties += 1
 
         # Bottom row
@@ -61,29 +61,29 @@ class GameLogic(QObject):
             # check liberties
             if (arrayIn[newY - 1][newX].getPiece() == 0):
                 liberties += 1
-            if (arrayIn[newY][newX + 1].getPiece() == 0):
-                liberties += 1
             if (arrayIn[newY][newX - 1].getPiece() == 0):
+                liberties += 1
+            if (arrayIn[newY][newX + 1].getPiece() == 0):
                 liberties += 1
 
         # Leftmost Column
         elif (newX == 0):
             # check liberties
-            if (arrayIn[newY][newX + 1].getPiece() == 0):
-                liberties += 1
             if (arrayIn[newY + 1][newX].getPiece() == 0):
                 liberties += 1
             if (arrayIn[newY - 1][newX].getPiece() == 0):
+                liberties += 1
+            if (arrayIn[newY][newX + 1].getPiece() == 0):
                 liberties += 1
 
         # Rightmost column
         elif (newX == 6):
             # check liberties
-            if (arrayIn[newY][newX - 1].getPiece() == 0):
-                liberties += 1
             if (arrayIn[newY + 1][newX].getPiece() == 0):
                 liberties += 1
             if (arrayIn[newY - 1][newX].getPiece() == 0):
+                liberties += 1
+            if (arrayIn[newY][newX - 1].getPiece() == 0):
                 liberties += 1
 
         # Everywhere in between
@@ -151,7 +151,7 @@ class GameLogic(QObject):
                 allies += 1
             if (arrayIn[newY][newX + 1].getPiece() == current_player):
                 allies += 1
-            if (arrayIn[newY][newX + 1].getPiece() == current_player):
+            if (arrayIn[newY][newX - 1].getPiece() == current_player):
                 allies += 1
 
         # Leftmost Column
@@ -188,75 +188,320 @@ class GameLogic(QObject):
 
         return allies
 
+    def checkAllyCoordinates(self, X, Y, arrayIn, current_player):
+        # Top Left Corner
+        if (X == 0 and Y == 0):
+            # check allies
+            if (arrayIn[Y + 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X + 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+
+        # Top Right corner
+        elif (X == 6 and Y == 0):
+            # check allies
+            if (arrayIn[Y + 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X - 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+
+        # Bottom Left corner
+        elif (X == 0 and Y == 6):
+            # check allies
+            if (arrayIn[Y - 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X + 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+        # Bottom Right corner
+        elif (X == 6 and Y == 6):
+            # check allies
+            if (arrayIn[Y - 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X - 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+        # Top Row
+        elif (Y == 0):
+            # check allies
+            if (arrayIn[Y + 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X + 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X - 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+        # Bottom row
+        elif (Y == 6):
+            # check allies
+            if (arrayIn[Y - 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X + 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X - 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+        # Leftmost Column
+        elif (X == 0):
+            # check allies
+            if (arrayIn[Y][X + 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y + 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y - 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+
+        # Rightmost column
+        elif (X == 6):
+            # check allies
+            if (arrayIn[Y][X - 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y + 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y - 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+
+        # Everywhere in between
+        else:
+            # check allies
+            if (arrayIn[Y + 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[1] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y - 1][X].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[0] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X + 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[3] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+            if (arrayIn[Y][X - 1].getPiece() == current_player):
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = True
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+            else:
+                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
+                updated_coordinates[2] = False
+                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
+
+        return arrayIn
+
     def attemptCapture(self, arrayIn, current_player):
         updatedArray = arrayIn
 
         #Go through whole board, checking if piece can be captured. If so, remove it from board:
         for x in range(len(arrayIn)):
             for y in range(len(arrayIn[0])):
-                if(self.checkCapture(x, y, updatedArray, current_player)):
+                if(self.checkCapture(x, y, updatedArray, "")):
                     updatedArray[y][x].setPiece(0)
 
         return updatedArray
 
     # Will check if piece can be captured
-    def checkCapture(self, newX, newY, arrayIn, current_player):
+    def checkCapture(self, X, Y, arrayIn, previousPiece):
         captured = True
 
-        if(newX == 0 and newY == 0):
-            if (arrayIn[newY][newX].getPiece() == current_player):
-                captured = False
-            for x, y in ((0, 1), (1, 0)):
-                if (arrayIn[newY + y][newX + x].getPiece() != current_player):
-                    captured = False
-        elif(newX == 6 and newY == 0):
-            if (arrayIn[newY][newX].getPiece() == current_player):
-                captured = False
-            for x, y in ((0, 1), (-1, 0)):
-                if (arrayIn[newY + y][newX + x].getPiece() != current_player):
-                    captured = False
-        elif(newX == 6 and newY == 6):
-            if (arrayIn[newY][newX].getPiece() == current_player):
-                captured = False
-            for x, y in ((0, -1), (-1, 0)):
-                if (arrayIn[newY + y][newX + x].getPiece() != current_player):
-                    captured = False
-        elif(newX == 0 and newY == 6):
-            if (arrayIn[newY][newX].getPiece() == current_player):
-                captured = False
-            for x, y in ((0, -1), (1, 0)):
-                if (arrayIn[newY + y][newX + x].getPiece() != current_player):
-                    captured = False
-        elif(newX == 0):
-            if (arrayIn[newY][newX].getPiece() == current_player):
-                captured = False
-            for x, y in ((0, 1), (0, -1), (1, 0)):
-                if (arrayIn[newY + y][newX + x].getPiece() != current_player):
-                    captured = False
-        elif(newX == 6):
-            if (arrayIn[newY][newX].getPiece() == current_player):
-                captured = False
-            for x, y in ((0, 1), (0, -1), (-1, 0)):
-                if (arrayIn[newY + y][newX + x].getPiece() != current_player):
-                    captured = False
-        elif(newY == 0):
-            if (arrayIn[newY][newX].getPiece() == current_player):
-                captured = False
-            for x, y in ((0, 1), (1, 0), (-1, 0)):
-                if (arrayIn[newY + y][newX + x].getPiece() != current_player):
-                    captured = False
-        elif(newY == 6):
-            if (arrayIn[newY][newX].getPiece() == current_player):
-                captured = False
-            for x, y in ((0, -1), (1, 0), (-1, 0)):
-                if (arrayIn[newY + y][newX + x].getPiece() != current_player):
-                    captured = False
+        if(arrayIn[Y][X].getPiece() == 0):
+            captured = False
+            return captured
         else:
-            if (arrayIn[newY][newX].getPiece() == current_player):
+            if (arrayIn[Y][X].getLiberties() == 0):
+                if (arrayIn[Y][X].getAllies() == 0):
+                    print("No allies or liberties")
+                    captured = True
+                    return captured
+                else:
+                    # Top left corner
+                    if (X == 0 and Y == 0):
+                        print("x = 0, y = 0")
+
+                    # Top Right corner
+                    elif (X == 6 and Y == 0):
+                        print("x = 6, y = 0")
+
+                    # Bottom Right corner
+                    elif (X == 6 and Y == 6):
+                        print("x = 6, y = 6")
+
+                    # Bottom left corner
+                    elif (X == 0 and Y == 6):
+                        print("x = 0, y = 6")
+
+                    # Leftmost column
+                    elif (X == 0):
+                        print("x = 0")
+
+                    # Rightmost column
+                    elif (X == 6):
+                        print("x = 6")
+
+                    # Top row
+                    elif (Y == 0):
+                        print("y = 0")
+
+                    elif (Y == 6):
+                        print("y = 6")
+
+                    # Everywhere else
+                    else:
+                        print("Inside")
+
+            else:
+                print("Liberties more than 1")
                 captured = False
-            for x, y in ((0, 1), (0, -1), (1, 0), (-1, 0)):
-                if (arrayIn[newY + y][newX + x].getPiece() != current_player):
-                    captured = False
+                return captured
 
         return captured
 
@@ -268,6 +513,7 @@ class GameLogic(QObject):
             # Check if neighboring pieces are empty
             liberties = self.checkLiberties(arrayIn, newX, newY)
             allies = self.checkAllies(newX, newY, arrayIn, current_player)
+            arrayIn = self.checkAllyCoordinates(newX, newY, arrayIn, current_player)
 
             print("Liberties found: " + str(liberties))
             print("Allies found: " + str(allies))
@@ -275,6 +521,7 @@ class GameLogic(QObject):
             if (liberties > 0 or allies > 0):
                 arrayIn[newY][newX].setPiece(current_player)
                 arrayIn = self.updateLiberties(arrayIn)
+                arrayIn = self.updateAllies(arrayIn)
 
                 boardArray = self.attemptCapture(arrayIn, current_player)
 
@@ -293,9 +540,8 @@ class GameLogic(QObject):
                     if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -309,9 +555,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -328,9 +573,8 @@ class GameLogic(QObject):
                     if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -344,9 +588,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -363,9 +606,8 @@ class GameLogic(QObject):
                     if (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -379,9 +621,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -398,9 +639,8 @@ class GameLogic(QObject):
                     if (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -414,9 +654,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -433,9 +672,8 @@ class GameLogic(QObject):
                     if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -449,9 +687,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -465,9 +702,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -484,9 +720,8 @@ class GameLogic(QObject):
                     if (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -500,9 +735,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -516,9 +750,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -535,9 +768,8 @@ class GameLogic(QObject):
                     if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -551,9 +783,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -567,9 +798,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -586,9 +816,8 @@ class GameLogic(QObject):
                     if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -602,9 +831,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -618,9 +846,8 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -637,9 +864,8 @@ class GameLogic(QObject):
                     if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
 
                         # switch players
                         if (current_player == 1):
@@ -653,6 +879,7 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
 
                         arrayIn = self.updateLiberties(arrayIn)
@@ -669,6 +896,7 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
 
                         arrayIn = self.updateLiberties(arrayIn)
@@ -685,6 +913,7 @@ class GameLogic(QObject):
                     elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
 
                         arrayIn = self.updateLiberties(arrayIn)
@@ -706,102 +935,19 @@ class GameLogic(QObject):
     def updateLiberties(self, boardArray):
         for row in range(0, len(boardArray)):
             for col in range(0, len(boardArray[0])):
-                liberties = 0
-                # Top left corner
-                if(row == 0 and col == 0):
-                    if(boardArray[col][row + 1].getPiece() == 0):
-                        liberties += 1
-                    if(boardArray[col + 1][row].getPiece() == 0):
-                        liberties += 1
-                    # add liberties to array
-                    boardArray[row][col].setLiberties(liberties)
-
-                # Bottom left corner
-                elif(row == 6 and col == 0):
-                    if(boardArray[col][row - 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col + 1][row].getPiece() == 0):
-                        liberties += 1
-                    # add liberties to array
-                    boardArray[row][col].setLiberties(liberties)
-
-                # Top right corner
-                elif (row == 0 and col == 6):
-                    if (boardArray[col][row + 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col - 1][row].getPiece() == 0):
-                        liberties += 1
-                    # add liberties to array
-                    boardArray[row][col].setLiberties(liberties)
-
-                # Bottom right corner
-                elif (row == 6 and col == 6):
-                    if (boardArray[col][row - 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col - 1][row].getPiece() == 0):
-                        liberties += 1
-                    # add liberties to array
-                    boardArray[row][col].setLiberties(liberties)
-
-                # Top row
-                elif (row == 0):
-                    if (boardArray[col][row + 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col + 1][row].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col - 1][row].getPiece() == 0):
-                        liberties += 1
-                    # add liberties to array
-                    boardArray[row][col].setLiberties(liberties)
-
-                # Bottom row
-                elif (row == 6):
-                    if (boardArray[col][row - 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col + 1][row].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col - 1][row].getPiece() == 0):
-                        liberties += 1
-                    # add liberties to array
-                    boardArray[row][col].setLiberties(liberties)
-
-                # Leftmost column
-                elif (col == 0):
-                    if (boardArray[col][row + 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col][row - 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col + 1][row].getPiece() == 0):
-                        liberties += 1
-                    # add liberties to array
-                    boardArray[row][col].setLiberties(liberties)
-
-                # Rightmost column
-                elif (col == 6):
-                    if (boardArray[col][row + 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col][row - 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col - 1][row].getPiece() == 0):
-                        liberties += 1
-                    # add liberties to array
-                    boardArray[row][col].setLiberties(liberties)
-
-                # Everywhere in between
-                else:
-                    if (boardArray[col][row + 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col][row - 1].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col + 1][row].getPiece() == 0):
-                        liberties += 1
-                    if (boardArray[col - 1][row].getPiece() == 0):
-                        liberties += 1
-                    # add liberties to array
-                    boardArray[row][col].setLiberties(liberties)
+                boardArray[col][row].setLiberties(self.checkLiberties(boardArray, row, col))
 
         self.printLiberties(boardArray)
         return boardArray
+
+    def updateAllies(self, boardArray):
+        for row in range(0, len(boardArray)):
+            for col in range(0, len(boardArray[0])):
+                current_player = boardArray[col][row].getPiece()
+                boardArray = self.checkAllyCoordinates(row, col, boardArray, current_player)
+                boardArray[col][row].setAllies(self.checkAllies(row, col, boardArray, current_player))
+        return boardArray
+
     def printLiberties(self, boardArray):
         print("Liberties:")
         print('\n'.join(['\t'.join([str(cell.getLiberties()) for cell in row]) for row in boardArray]))
