@@ -444,13 +444,16 @@ class GameLogic(QObject):
         #Go through whole board, checking if piece can be captured. If so, remove it from board:
         for x in range(len(arrayIn)):
             for y in range(len(arrayIn[0])):
-                if(self.checkCapture(x, y, updatedArray, "")):
+                if(self.checkCapture(x, y, updatedArray)):
                     updatedArray[y][x].setPiece(0)
+
+        updatedArray = self.updateLiberties(updatedArray)
+        updatedArray = self.updateAllies(updatedArray)
 
         return updatedArray
 
     # Will check if piece can be captured
-    def checkCapture(self, X, Y, arrayIn, previousPiece):
+    def checkCapture(self, X, Y, arrayIn):
         captured = True
 
         if(arrayIn[Y][X].getPiece() == 0):
@@ -497,6 +500,97 @@ class GameLogic(QObject):
                     # Everywhere else
                     else:
                         print("Inside")
+                        modified_array = arrayIn
+                        allies = modified_array[Y][X].getAllyCoordinates()
+                        if (modified_array[Y][X].getPiece() == 1):
+                            modified_array[Y][X].setPiece(2)
+                        elif (modified_array[Y][X].getPiece() == 2):
+                            modified_array[Y][X].setPiece(1)
+                        else:
+                            print("What? How?")
+                        self.updateAllies(modified_array)
+                        self.updateLiberties(modified_array)
+                        if (allies[3] == True):
+                            print("Right ally")
+                            if(self.checkCapture(X + 1, Y, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[2] == True):
+                            print("Left ally")
+                            if (self.checkCapture(X - 1, Y, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[1] == True):
+                            print("Below ally")
+                            if (self.checkCapture(X + 1, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[0] == True):
+                            print("Above ally")
+                            if (self.checkCapture(X, Y - 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+
 
             else:
                 print("Liberties more than 1")
@@ -537,7 +631,7 @@ class GameLogic(QObject):
                 self.updateBoardSignal.emit(boardArray, current_player)
             else:
                 if(newX == 0 and newY == 0):
-                    if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
+                    if (self.checkCapture(newX + 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -552,7 +646,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY + 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -570,7 +664,7 @@ class GameLogic(QObject):
                     else:
                         print("Piece cannot be placed here")
                 elif(newX == 0 and newY == 6):
-                    if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
+                    if (self.checkCapture(newX + 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -585,7 +679,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY - 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -603,7 +697,7 @@ class GameLogic(QObject):
                     else:
                         print("Piece cannot be placed here")
                 elif(newX == 6 and newY == 0):
-                    if (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
+                    if (self.checkCapture(newX - 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -618,7 +712,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY + 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -636,7 +730,7 @@ class GameLogic(QObject):
                     else:
                         print("Piece cannot be placed here")
                 elif(newX == 6 and newY == 6):
-                    if (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
+                    if (self.checkCapture(newX - 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -651,7 +745,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY - 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -669,7 +763,7 @@ class GameLogic(QObject):
                     else:
                         print("Piece cannot be placed here")
                 elif(newX == 0):
-                    if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
+                    if (self.checkCapture(newX + 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -684,7 +778,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY + 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -699,7 +793,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY - 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -717,7 +811,7 @@ class GameLogic(QObject):
                     else:
                         print("Piece cannot be placed here")
                 elif(newX == 6):
-                    if (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
+                    if (self.checkCapture(newX - 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -732,7 +826,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY + 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -747,7 +841,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY - 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -765,7 +859,7 @@ class GameLogic(QObject):
                     else:
                         print("Piece cannot be placed here")
                 elif(newY == 0):
-                    if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
+                    if (self.checkCapture(newX + 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -780,7 +874,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
+                    elif (self.checkCapture(newX - 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -795,7 +889,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY + 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -813,7 +907,7 @@ class GameLogic(QObject):
                     else:
                         print("Piece cannot be placed here")
                 elif(newY == 6):
-                    if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
+                    if (self.checkCapture(newX + 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -828,7 +922,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
+                    elif (self.checkCapture(newX - 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -843,7 +937,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY - 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -861,7 +955,7 @@ class GameLogic(QObject):
                     else:
                         print("Piece cannot be placed here")
                 else:
-                    if (self.checkCapture(newX + 1, newY, arrayIn, current_player)):
+                    if (self.checkCapture(newX + 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -876,24 +970,7 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX - 1, newY, arrayIn, current_player)):
-                        arrayIn[newY][newX].setPiece(current_player)
-                        arrayIn = self.updateLiberties(arrayIn)
-                        arrayIn = self.updateAllies(arrayIn)
-                        boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
-
-                        # switch players
-                        if (current_player == 1):
-                            current_player = 2
-                        elif (current_player == 2):
-                            current_player = 1
-                        else:
-                            current_player = 1
-
-                        self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY + 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX - 1, newY, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
@@ -910,7 +987,24 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
-                    elif (self.checkCapture(newX, newY - 1, arrayIn, current_player)):
+                    elif (self.checkCapture(newX, newY + 1, arrayIn)):
+                        arrayIn[newY][newX].setPiece(current_player)
+                        arrayIn = self.updateLiberties(arrayIn)
+                        arrayIn = self.updateAllies(arrayIn)
+                        boardArray = self.attemptCapture(arrayIn, current_player)
+
+                        arrayIn = self.updateLiberties(arrayIn)
+
+                        # switch players
+                        if (current_player == 1):
+                            current_player = 2
+                        elif (current_player == 2):
+                            current_player = 1
+                        else:
+                            current_player = 1
+
+                        self.updateBoardSignal.emit(boardArray, current_player)
+                    elif (self.checkCapture(newX, newY - 1, arrayIn)):
                         arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
