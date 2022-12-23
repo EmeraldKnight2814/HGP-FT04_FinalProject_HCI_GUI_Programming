@@ -479,6 +479,26 @@ class GameLogic(QObject):
                             print("What? How?")
                         self.updateAllies(modified_array)
                         self.updateLiberties(modified_array)
+                        if(allies[3] == True and allies[1] == True):
+                            print("Below and Right ally")
+                            if(self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
@@ -533,6 +553,26 @@ class GameLogic(QObject):
                             print("What? How?")
                         self.updateAllies(modified_array)
                         self.updateLiberties(modified_array)
+                        if (allies[2] == True and allies[1] == True):
+                            print("Below and Left ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
                         if (allies[2] == True):
                             print("Left ally")
                             if (self.checkCapture(X - 1, Y, modified_array)):
@@ -587,6 +627,26 @@ class GameLogic(QObject):
                             print("What? How?")
                         self.updateAllies(modified_array)
                         self.updateLiberties(modified_array)
+                        if (allies[2] == True and allies[0] == True):
+                            print("Above and Left ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
                         if (allies[2] == True):
                             print("Left ally")
                             if (self.checkCapture(X - 1, Y, modified_array)):
@@ -641,6 +701,26 @@ class GameLogic(QObject):
                             print("What? How?")
                         self.updateAllies(modified_array)
                         self.updateLiberties(modified_array)
+                        if (allies[3] == True and allies[0] == True):
+                            print("Above and Right ally")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X, Y - 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
@@ -694,6 +774,86 @@ class GameLogic(QObject):
                             print("What? How?")
                         self.updateAllies(modified_array)
                         self.updateLiberties(modified_array)
+                        if(allies[3] == True and allies[1] == True and allies[0] == True):
+                            print("Right, Above, and Below allies")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array) and self.checkCapture(X, Y - 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[3] == True and allies[0] == True):
+                            print("Above and Right ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[0] == True and allies[1] == True):
+                            print("Above and Below ally")
+                            if (self.checkCapture(X, Y + 1, modified_array) and self.checkCapture(X, Y - 1,modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[3] == True and allies[1] == True):
+                            print("Below and Right ally")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X, Y + 1,modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
@@ -768,6 +928,85 @@ class GameLogic(QObject):
                             print("What? How?")
                         self.updateAllies(modified_array)
                         self.updateLiberties(modified_array)
+                        if (allies[2] == True and allies[1] == True and allies[0] == True):
+                            print("Left, Above, and Below allies")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1,modified_array) and self.checkCapture(X, Y - 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[2] == True and allies[0] == True):
+                            print("Above and Left ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                        if (allies[2] == True and allies[1] == True):
+                            print("Below and Left ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[0] == True and allies[1] == True):
+                            print("Above and Below ally")
+                            if (self.checkCapture(X, Y + 1, modified_array) and self.checkCapture(X, Y - 1,modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
                         if (allies[2] == True):
                             print("Left ally")
                             if (self.checkCapture(X - 1, Y, modified_array)):
@@ -842,6 +1081,86 @@ class GameLogic(QObject):
                             print("What? How?")
                         self.updateAllies(modified_array)
                         self.updateLiberties(modified_array)
+                        if (allies[1] == True and allies[2] == True and allies[3] == True):
+                            print("Below, right, and left ally")
+                            if (self.checkCapture(X, Y + 1, modified_array) and self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X - 1, Y, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[2] == True and allies[1] == True):
+                            print("Below and Left ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[3] == True and allies[1] == True):
+                            print("Below and Right ally")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X, Y + 1,modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[3] == True and allies[2] == True):
+                            print("Left and Right ally")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X - 1, Y, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
@@ -915,6 +1234,85 @@ class GameLogic(QObject):
                             print("What? How?")
                         self.updateAllies(modified_array)
                         self.updateLiberties(modified_array)
+                        if (allies[3] == True and allies[2] == True and allies[0] == True):
+                            print("Left, Right and Above ally")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y - 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[3] == True and allies[2] == True):
+                            print("Left and Right ally")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X - 1, Y, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[2] == True and allies[0] == True):
+                            print("Above and Left ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                        if (allies[3] == True and allies[0] == True):
+                            print("Above and Right ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
@@ -989,6 +1387,225 @@ class GameLogic(QObject):
                             print("What? How?")
                         self.updateAllies(modified_array)
                         self.updateLiberties(modified_array)
+                        if (allies[3] == True and allies[2] == True and allies[1] == True and allies[0] == True):
+                            print("Cardinal Allies")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y - 1, modified_array) and self.checkCapture(X, Y - 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[3] == True and allies[2] == True and allies[0] == True):
+                            print("Left, Right and Above ally")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y - 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[2] == True and allies[1] == True and allies[0] == True):
+                            print("Left, Above, and Below allies")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1,modified_array) and self.checkCapture(X, Y - 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[1] == True and allies[2] == True and allies[3] == True):
+                            print("Below, Right, and Left ally")
+                            if (self.checkCapture(X, Y + 1, modified_array) and self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X - 1, Y, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[3] == True and allies[1] == True and allies[0] == True):
+                            print("Right, Above, and Below allies")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array) and self.checkCapture(X, Y - 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[3] == True and allies[2] == True):
+                            print("Left and Right ally")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X - 1, Y, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[0] == True and allies[1] == True):
+                            print("Above and Below ally")
+                            if (self.checkCapture(X, Y + 1, modified_array) and self.checkCapture(X, Y - 1,modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[2] == True and allies[0] == True):
+                            print("Above and Left ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                        if (allies[3] == True and allies[0] == True):
+                            print("Above and Right ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[2] == True and allies[1] == True):
+                            print("Below and Left ally")
+                            if (self.checkCapture(X - 1, Y, modified_array) and self.checkCapture(X, Y + 1, modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
+                        if (allies[3] == True and allies[1] == True):
+                            print("Below and Right ally")
+                            if (self.checkCapture(X + 1, Y, modified_array) and self.checkCapture(X, Y + 1,modified_array)):
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = True
+                                return captured
+                            else:
+                                if (modified_array[Y][X].getPiece() == 1):
+                                    modified_array[Y][X].setPiece(2)
+                                elif (modified_array[Y][X].getPiece() == 2):
+                                    modified_array[Y][X].setPiece(1)
+                                else:
+                                    print("What? How?")
+                                captured = False
+                                return captured
                         if (allies[3] == True):
                             print("Right ally")
                             if(self.checkCapture(X + 1, Y, modified_array)):
@@ -1069,7 +1686,6 @@ class GameLogic(QObject):
                                     print("What? How?")
                                 captured = False
                                 return captured
-
 
             else:
                 print("Liberties more than 1")

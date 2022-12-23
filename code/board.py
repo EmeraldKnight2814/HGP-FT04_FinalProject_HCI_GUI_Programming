@@ -124,6 +124,7 @@ class Board(QFrame):  # base the board on a QFrame widget
         # add times reset
         print("This is reset")
         self.times_reset += signal
+        self.current_player = 1
         # reset array to full transparent:
         for row in range(0, len(self.boardArray)):
             for col in range(0, len(self.boardArray[0])):
