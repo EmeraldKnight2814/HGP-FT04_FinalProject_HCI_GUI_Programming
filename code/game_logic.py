@@ -992,14 +992,7 @@ class GameLogic(QObject):
                         if (allies[3] == True):
                             print("Right ally")
                             if(self.checkCapture(X + 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -1012,14 +1005,7 @@ class GameLogic(QObject):
                         if (allies[2] == True):
                             print("Left ally")
                             if (self.checkCapture(X - 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -1032,14 +1018,7 @@ class GameLogic(QObject):
                         if (allies[1] == True):
                             print("Below ally")
                             if (self.checkCapture(X + 1, Y + 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -1052,14 +1031,7 @@ class GameLogic(QObject):
                         if (allies[0] == True):
                             print("Above ally")
                             if (self.checkCapture(X, Y - 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -1069,6 +1041,12 @@ class GameLogic(QObject):
                                     print("What? How?")
                                 captured = False
                                 return captured
+                        if (modified_array[Y][X].getPiece() == 1):
+                            modified_array[Y][X].setPiece(2)
+                        elif (modified_array[Y][X].getPiece() == 2):
+                            modified_array[Y][X].setPiece(1)
+                        else:
+                            print("What? How?")
 
 
             else:

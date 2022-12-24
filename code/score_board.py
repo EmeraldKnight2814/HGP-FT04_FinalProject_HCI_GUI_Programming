@@ -4,7 +4,13 @@ from PyQt6.QtCore import *
 class ScoreBoard(QDockWidget):
     '''# base the score_board on a QDockWidget'''
     resetSignal = pyqtSignal(int) # Signal sent when reset button is pressed
-    startSignal = pyqtSignal(int) # Signal sent when start button is pressed
+    startSignal = pyqtSignal() # Signal sent when start button is pressed
+    speedSignal = pyqtSignal() # Signal sent when speed button is pressed
+
+    pass_pressed = 0
+
+    p1score = 0
+    p2score = 0
 
     def __init__(self):
         super().__init__()
@@ -31,7 +37,7 @@ class ScoreBoard(QDockWidget):
 
         # extra feature of speed go starts here
         self.start_speed = QPushButton("Start Speed Go")
-        self.start_speed.pressed.connect(self.startGame)
+        self.start_speed.pressed.connect(self.startSpeedGo)
 
         # this button resets the game
         self.reset_button = QPushButton("Reset")
@@ -57,6 +63,7 @@ class ScoreBoard(QDockWidget):
         self.mainLayout.addWidget(self.label_timeRemaining)
         self.setWidget(self.mainWidget)
         self.show()
+        self.label_timeRemaining.hide()
 
     def center(self):
         '''centers the window on the screen, you do not need to implement this method'''
@@ -67,6 +74,8 @@ class ScoreBoard(QDockWidget):
         board.clickLocationSignal.connect(self.setClickLocation)
         # when the updateTimerSignal is emitted in the board the setTimeRemaining slot receives it
         board.updateTimerSignal.connect(self.setTimeRemaining)
+        # when the game over signal is emitted
+        board.gameOver.connect(self.gameOver)
 
     def game_connection(self, game_logic):
         '''handles a signal sent from game logic class'''
@@ -75,6 +84,7 @@ class ScoreBoard(QDockWidget):
     @pyqtSlot(str) # checks to make sure that the following slot is receiving an argument of the type 'int'
     def setClickLocation(self, clickLoc):
         '''updates the label to show the click location'''
+        self.pass_pressed = 0
         self.label_clickLocation.setText("Click Location:" + "\n" + clickLoc)
         print('slot ' + clickLoc)
 
@@ -100,15 +110,28 @@ class ScoreBoard(QDockWidget):
     # this allows the game to end if the button is clicked twice
     def passTurn(self):
         print("pass")
-        # TODO: Write code to say that if the button is clicked twice it ends the game and puts up a dialog box
+        self.pass_pressed += 1
+        if(self.pass_pressed == 2):
+            self.gameOver(self.p1score, self.p2score)
 
     # this starts the game and the timer
     def startGame(self):
         print("Start")
-            # TODO: Write start sequence
+        self.startSignal.emit()
 
     # this connects the start sequence from board to this one for speed go
-    # TODO: Connect the signal from board for the start button made
+    def startSpeedGo(self):
+        print("speed")
+        self.speedSignal.emit()
+        self.label_timeRemaining.show()
+
+    def gameOver(self, p1score, p2score):
+        print("Game over")
+        goBox = QMessageBox(self)
+        goBox.setText("Game over!"
+                      "\n Player 1 score: " + str(p1score) +
+                      "\n Player 2 score: " + str(p2score))
+        goBox.exec()
 
     # this shows the rules and how to play the game
     def seeRule(self):

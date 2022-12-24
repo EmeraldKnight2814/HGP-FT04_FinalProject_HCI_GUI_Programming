@@ -8,11 +8,15 @@ class Board(QFrame):  # base the board on a QFrame widget
     updateTimerSignal = pyqtSignal(int) # signal sent when timer is updated
     clickLocationSignal = pyqtSignal(str) # signal sent when there is a new click location
     checkMoveSignal = pyqtSignal(int, int, list, int)# Signal sent when attempting to make move
+    gameOver = pyqtSignal(int, int)
 
     boardWidth  = 8     # board is 8 squares wide
     boardHeight = 8     # board is 8 squares tall
     timerSpeed  = 1000     # the timer updates every 1 second
     counter     = 120    # the number the counter will count down from
+
+    p1score = 0
+    p2score = 0
 
     times_reset = -1
 
@@ -35,13 +39,13 @@ class Board(QFrame):  # base the board on a QFrame widget
                            [Piece(0,0,4), Piece(0,1,4), Piece(0,2,4), Piece(0,3,4), Piece(0,4,4), Piece(0,5,4), Piece(0,6,4)],
                            [Piece(0,0,5), Piece(0,1,5), Piece(0,2,5), Piece(0,3,5), Piece(0,4,5), Piece(0,5,5), Piece(0,6,5)],
                            [Piece(0,0,6), Piece(0,1,6), Piece(0,2,6), Piece(0,3,6), Piece(0,4,6), Piece(0,5,6), Piece(0,6,6)]]
-
-        self.start()                # start the game which will start the timer
         self.setStyleSheet("background-color: black;")
         self.printBoardArray()
 
     def make_connection(self, score_board):
         score_board.resetSignal.connect(self.resetGame)
+        score_board.startSignal.connect(self.start)
+        score_board.speedSignal.connect(self.startSpeed)
 
     def logic_connection(self, game_logic):
         game_logic.updateBoardSignal.connect(self.updateBoardState)
@@ -60,16 +64,17 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def mousePosToColRow(self, event):
         '''convert the mouse click event to a row and column'''
-        # (x - 1/2 width) / width
-        closest_x = int((event.position().x() - self.squareWidth() / 2) / self.squareWidth())
-        if (closest_x >= 7):
-            closest_x = 6
-        # (y - 1/2 height) / height
-        closest_y = int((event.position().y() - self.squareHeight() / 2) / self.squareHeight())
-        if (closest_y >= 7):
-            closest_y = 6
+        if(self.isStarted == True):
+            # (x - 1/2 width) / width
+            closest_x = int((event.position().x() - self.squareWidth() / 2) / self.squareWidth())
+            if (closest_x >= 7):
+                closest_x = 6
+            # (y - 1/2 height) / height
+            closest_y = int((event.position().y() - self.squareHeight() / 2) / self.squareHeight())
+            if (closest_y >= 7):
+                closest_y = 6
 
-        self.tryMove(closest_x, closest_y)
+            self.tryMove(closest_x, closest_y)
 
     def squareWidth(self):
         '''returns the width of one square in the board'''
@@ -83,15 +88,21 @@ class Board(QFrame):  # base the board on a QFrame widget
         '''starts game'''
         self.isStarted = True                       # set the boolean which determines if the game has started to TRUE
         self.resetGame(1)                            # reset the game
+        print("start () - timer is started")
+
+    def startSpeed(self):
+        self.isStarted = True  # set the boolean which determines if the game has started to TRUE
+        self.resetGame(1)  # reset the game
         self.timer.start(self.timerSpeed, self)     # start the timer with the correct speed
         print("start () - timer is started")
 
+
     def timerEvent(self, event):
         '''this event is automatically called when the timer is updated. based on the timerSpeed variable '''
-        # TODO adapt this code to handle your timers
         if event.timerId() == self.timer.timerId():  # if the timer that has 'ticked' is the one in this class
             if Board.counter == 0:
                 print("Game over")
+                self.gameOver.emit(self.p1score, self.p2score)
             self.counter -= 1
             Board.counter -= 1
             print('timerEvent()', self.counter)
