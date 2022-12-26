@@ -2,6 +2,9 @@ from PyQt6.QtCore import *
 
 class GameLogic(QObject):
     updateBoardSignal = pyqtSignal(list, int)
+    prisonerCaptured = pyqtSignal(int, int)
+    territorySignal = pyqtSignal(int, int)
+    playerChange = pyqtSignal(int)
 
     created = False
     def __init__(self, parent):
@@ -445,12 +448,27 @@ class GameLogic(QObject):
         for x in range(len(arrayIn)):
             for y in range(len(arrayIn[0])):
                 if(self.checkCapture(x, y, updatedArray)):
+                    self.prisonerCaptured.emit(1, current_player)
                     updatedArray[y][x].setPiece(0)
 
         updatedArray = self.updateLiberties(updatedArray)
         updatedArray = self.updateAllies(updatedArray)
 
         return updatedArray
+
+    def updateTerritory(self, arrayIn):
+        p1territory = 0
+        p2territory = 0
+
+        for x in range(len(arrayIn)):
+            for y in range(len(arrayIn[0])):
+                if(arrayIn[y][x].getPiece() == 1):
+                    p1territory += 1
+                elif(arrayIn[y][x].getPiece() == 2):
+                    p2territory += 1
+                else:
+                    print("No owner")
+        self.territorySignal.emit(p1territory, p2territory)
 
     # Will check if piece can be captured
     def checkCapture(self, X, Y, arrayIn):
@@ -1075,24 +1093,29 @@ class GameLogic(QObject):
                 arrayIn = self.updateAllies(arrayIn)
 
                 boardArray = self.attemptCapture(arrayIn, current_player)
+                self.updateTerritory(boardArray)
 
                 # switch players
                 # NOTE: I would like to change this to Match/Case, however my machine is only capable of Python 3.9 at this time.
                 if (current_player == 1):
                     current_player = 2
+                    self.playerChange.emit(current_player)
                 elif (current_player == 2):
                     current_player = 1
+                    self.playerChange.emit(current_player)
                 else:
                     current_player = 1
+                    self.playerChange.emit(current_player)
 
                 self.updateBoardSignal.emit(boardArray, current_player)
             else:
+                arrayIn[newY][newX].setPiece(current_player)
                 if(newX == 0 and newY == 0):
                     if (self.checkCapture(newX + 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1103,11 +1126,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY + 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1118,14 +1142,16 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     else:
                         print("Piece cannot be placed here")
+                        arrayIn[newY][newX].setPiece(0)
                 elif(newX == 0 and newY == 6):
                     if (self.checkCapture(newX + 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1136,11 +1162,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY - 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1151,14 +1178,16 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     else:
                         print("Piece cannot be placed here")
+                        arrayIn[newY][newX].setPiece(0)
                 elif(newX == 6 and newY == 0):
                     if (self.checkCapture(newX - 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1169,11 +1198,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY + 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1184,14 +1214,16 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     else:
                         print("Piece cannot be placed here")
+                        arrayIn[newY][newX].setPiece(0)
                 elif(newX == 6 and newY == 6):
                     if (self.checkCapture(newX - 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1202,11 +1234,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY - 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1217,14 +1250,16 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     else:
                         print("Piece cannot be placed here")
+                        arrayIn[newY][newX].setPiece(0)
                 elif(newX == 0):
                     if (self.checkCapture(newX + 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1235,11 +1270,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY + 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1250,11 +1286,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY - 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1265,14 +1302,16 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     else:
                         print("Piece cannot be placed here")
+                        arrayIn[newY][newX].setPiece(0)
                 elif(newX == 6):
                     if (self.checkCapture(newX - 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1283,11 +1322,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY + 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1298,11 +1338,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY - 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1313,14 +1354,16 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     else:
                         print("Piece cannot be placed here")
+                        arrayIn[newY][newX].setPiece(0)
                 elif(newY == 0):
                     if (self.checkCapture(newX + 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1331,11 +1374,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX - 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1346,11 +1390,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY + 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1361,14 +1406,16 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     else:
                         print("Piece cannot be placed here")
+                        arrayIn[newY][newX].setPiece(0)
                 elif(newY == 6):
                     if (self.checkCapture(newX + 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1379,11 +1426,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX - 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1394,11 +1442,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY - 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1409,14 +1458,16 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     else:
                         print("Piece cannot be placed here")
+                        arrayIn[newY][newX].setPiece(0)
                 else:
                     if (self.checkCapture(newX + 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1427,13 +1478,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX - 1, newY, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1444,13 +1494,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY + 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1461,13 +1510,12 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     elif (self.checkCapture(newX, newY - 1, arrayIn)):
-                        arrayIn[newY][newX].setPiece(current_player)
                         arrayIn = self.updateLiberties(arrayIn)
                         arrayIn = self.updateAllies(arrayIn)
                         boardArray = self.attemptCapture(arrayIn, current_player)
-
-                        arrayIn = self.updateLiberties(arrayIn)
+                        self.updateTerritory(boardArray)
 
                         # switch players
                         if (current_player == 1):
@@ -1478,8 +1526,10 @@ class GameLogic(QObject):
                             current_player = 1
 
                         self.updateBoardSignal.emit(boardArray, current_player)
+                        self.playerChange.emit(current_player)
                     else:
                         print("Piece cannot be placed here")
+                        arrayIn[newY][newX].setPiece(0)
         else:
             print("There is already a piece at (" + str(newX) + ", " + str(newY) + ")")
 

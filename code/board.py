@@ -9,11 +9,15 @@ class Board(QFrame):  # base the board on a QFrame widget
     clickLocationSignal = pyqtSignal(str) # signal sent when there is a new click location
     checkMoveSignal = pyqtSignal(int, int, list, int)# Signal sent when attempting to make move
     gameOver = pyqtSignal(int, int)
+    playerChange = pyqtSignal(int)
 
     boardWidth  = 8     # board is 8 squares wide
     boardHeight = 8     # board is 8 squares tall
     timerSpeed  = 1000     # the timer updates every 1 second
     counter     = 120    # the number the counter will count down from
+
+    p1counter = counter
+    p2counter = counter
 
     p1score = 0
     p2score = 0
@@ -21,6 +25,8 @@ class Board(QFrame):  # base the board on a QFrame widget
     times_reset = -1
 
     current_player = 1
+
+    speed = False
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -55,6 +61,10 @@ class Board(QFrame):  # base the board on a QFrame widget
         print("Board state updating")
         self.boardArray = boardArray
         self.current_player = currentPlayer
+        if(self.speed == True):
+            self.timer.stop()
+            self.counter = 120
+            self.timer.start(self.timerSpeed, self)
         print("Board state updated")
 
     def printBoardArray(self):
@@ -92,6 +102,7 @@ class Board(QFrame):  # base the board on a QFrame widget
 
     def startSpeed(self):
         self.isStarted = True  # set the boolean which determines if the game has started to TRUE
+        self.speed = True
         self.resetGame(1)  # reset the game
         self.timer.start(self.timerSpeed, self)     # start the timer with the correct speed
         print("start () - timer is started")
@@ -100,13 +111,30 @@ class Board(QFrame):  # base the board on a QFrame widget
     def timerEvent(self, event):
         '''this event is automatically called when the timer is updated. based on the timerSpeed variable '''
         if event.timerId() == self.timer.timerId():  # if the timer that has 'ticked' is the one in this class
-            if Board.counter == 0:
-                print("Game over")
-                self.gameOver.emit(self.p1score, self.p2score)
-            self.counter -= 1
-            Board.counter -= 1
-            print('timerEvent()', self.counter)
-            self.updateTimerSignal.emit(self.counter)
+            if self.current_player == 1:
+                if Board.p1counter == 0:
+                    print("Game over")
+                    self.gameOver.emit(self.p1score, self.p2score)
+                self.p1counter -= 1
+                Board.p1counter -= 1
+                print('timerEvent()', self.p1counter)
+                self.updateTimerSignal.emit(self.p1counter)
+            elif self.current_player == 2:
+                if Board.p2counter == 0:
+                    print("Game over")
+                    self.gameOver.emit(self.p1score, self.p2score)
+                self.p2counter -= 1
+                Board.p2counter -= 1
+                print('timerEvent()', self.p2counter)
+                self.updateTimerSignal.emit(self.p2counter)
+            else:
+                if Board.p1counter == 0:
+                    print("Game over")
+                    self.gameOver.emit(self.p1score, self.p2score)
+                self.p1counter -= 1
+                Board.p1counter -= 1
+                print('timerEvent()', self.p1counter)
+                self.updateTimerSignal.emit(self.p1counter)
         else:
             super(Board, self).timerEvent(event)      # if we do not handle an event we should pass it to the super
                                                         # class for handling
@@ -141,10 +169,13 @@ class Board(QFrame):  # base the board on a QFrame widget
                 self.boardArray[row][col].setPiece(0)
 
         self.updateLiberties()
+        self.current_player = 1
 
         #call piece drawing function
         painter = QPainter(self)
         self.drawPieces(painter)
+
+        self.playerChange.emit(self.current_player)
 
         self.update()
 

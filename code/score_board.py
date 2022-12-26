@@ -9,8 +9,14 @@ class ScoreBoard(QDockWidget):
 
     pass_pressed = 0
 
+    current_player = 0
+
     p1score = 0
     p2score = 0
+    p1prisoners = 0
+    p2prisoners = 0
+    p1territory = 0
+    p2territory = 0
 
     def __init__(self):
         super().__init__()
@@ -50,16 +56,28 @@ class ScoreBoard(QDockWidget):
         # creates the labels which will be updated by signals
         self.label_clickLocation = QLabel("Click Location: ")
         self.label_timeRemaining = QLabel("Time remaining: ")
-        self.label_playerTurn = QLabel("Players Turn: ")
-        self.label_playerPoints = QLabel("Player Points: ")
+        self.label_playerTurn = QLabel("Current Player: 0")
+        self.label_p1territory = QLabel("P1 Territory: 0")
+        self.label_p1prisoners = QLabel("P1 Prisoners: 0")
+        self.label_p2territory = QLabel("P2 Territory: 0")
+        self.label_p2prisoners = QLabel("P2 Prisoners: 0")
+        self.label_p1score = QLabel("P1 Score: 0")
+        self.label_p2score = QLabel("P2 Score: 0")
 
         self.mainWidget.setLayout(self.mainLayout)
-        self.mainLayout.addWidget(self.label_clickLocation)
+        #self.mainLayout.addWidget(self.label_clickLocation)
+        self.mainLayout.addWidget(self.label_playerTurn)
+        self.mainLayout.addWidget(self.label_p1territory)
+        self.mainLayout.addWidget(self.label_p1prisoners)
+        self.mainLayout.addWidget(self.label_p2territory)
+        self.mainLayout.addWidget(self.label_p2prisoners)
         self.mainLayout.addWidget(self.pass_button)
         self.mainLayout.addWidget(self.start_button)
         self.mainLayout.addWidget(self.start_speed)
         self.mainLayout.addWidget(self.see_rules)
         self.mainLayout.addWidget(self.reset_button)
+        self.mainLayout.addWidget(self.label_p1score)
+        self.mainLayout.addWidget(self.label_p2score)
         self.mainLayout.addWidget(self.label_timeRemaining)
         self.setWidget(self.mainWidget)
         self.show()
@@ -76,10 +94,14 @@ class ScoreBoard(QDockWidget):
         board.updateTimerSignal.connect(self.setTimeRemaining)
         # when the game over signal is emitted
         board.gameOver.connect(self.gameOver)
+        # When player change signal is emitted
+        board.playerChange.connect(self.setPlayersTurn)
 
     def game_connection(self, game_logic):
         '''handles a signal sent from game logic class'''
-        print("logic connection made")
+        game_logic.prisonerCaptured.connect(self.updatePrisoners)
+        game_logic.territorySignal.connect(self.updateTerritory)
+        game_logic.playerChange.connect(self.setPlayersTurn)
 
     @pyqtSlot(str) # checks to make sure that the following slot is receiving an argument of the type 'int'
     def setClickLocation(self, clickLoc):
@@ -91,7 +113,7 @@ class ScoreBoard(QDockWidget):
     @pyqtSlot(int) # this updates the timer and shows the time remaining
     def setTimeRemaining(self, timeRemainng):
         '''updates the time remaining label to show the time remaining'''
-        update = "Time Remaining: " + str(timeRemainng)
+        update = "Player " + str(self.current_player) + " Time Remaining: " + str(timeRemainng)
         self.label_timeRemaining.setText(update)
         print('slot '+update)
         # self.redraw()
@@ -99,8 +121,8 @@ class ScoreBoard(QDockWidget):
     # this shows whose turn it is
     def setPlayersTurn(self, turn):
         '''updates the label to show the players turn'''
-        self.label_playerTurn.setText("Player Turn:" + "")
-        print('slot ' + '')
+        self.current_player = turn
+        self.label_playerTurn.setText("Current Player: " + str(turn))
 
     # this updates the label to show the player points
     def setPlayerPoints(self, point):
@@ -164,3 +186,36 @@ class ScoreBoard(QDockWidget):
     def reset(self):
         print("Reset")
         self.resetSignal.emit(1)
+
+    def updatePrisoners(self, mod, player):
+        print("Prisoners")
+        if(player == 1):
+            print("player 1")
+            self.p1prisoners += mod
+            self.label_p1prisoners.setText("P1 Prisoners: " + str(self.p1prisoners))
+            self.p1score = self.p1prisoners + self.p1territory
+            self.label_p1score.setText("P1 Score: " + str(self.p1score))
+        elif(player == 2):
+            print("player 2")
+            self.p2prisoners += mod
+            self.label_p2prisoners.setText("P2 Prisoners: " + str(self.p2prisoners))
+            self.p2score = self.p2prisoners + self.p2territory
+            self.label_p2score.setText("P2 Score: " + str(self.p2score))
+        else:
+            print("How did this happen?")
+
+        self.update()
+
+    def updateTerritory(self, p1, p2):
+        print("Territory")
+        self.p1territory = p1
+        self.p2territory = p2
+        self.label_p1territory.setText("P1 Territory: " + str(self.p1territory))
+        self.label_p2territory.setText("P2 Territory: " + str(self.p2territory))
+
+        self.p1score = self.p1prisoners + self.p1territory
+        self.p2score = self.p2prisoners + self.p2territory
+        self.label_p1score.setText("P1 Score: " + str(self.p1score))
+        self.label_p2score.setText("P2 Score: " + str(self.p2score))
+
+        self.update()
