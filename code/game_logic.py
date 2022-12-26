@@ -192,264 +192,112 @@ class GameLogic(QObject):
         return allies
 
     def checkAllyCoordinates(self, X, Y, arrayIn, current_player):
+        updated_coordinates = [False, False, False, False]
+
         # Top Left Corner
         if (X == 0 and Y == 0):
             # check allies
             if (arrayIn[Y + 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[1] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[1] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X + 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[3] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[3] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
 
         # Top Right corner
         elif (X == 6 and Y == 0):
             # check allies
             if (arrayIn[Y + 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[1] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[1] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X - 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[2] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[2] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
 
         # Bottom Left corner
         elif (X == 0 and Y == 6):
             # check allies
             if (arrayIn[Y - 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[0] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[0] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X + 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[3] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[3] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
 
         # Bottom Right corner
         elif (X == 6 and Y == 6):
             # check allies
             if (arrayIn[Y - 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[0] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[0] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X - 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[2] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[2] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
 
         # Top Row
         elif (Y == 0):
             # check allies
             if (arrayIn[Y + 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[1] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[1] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X + 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[3] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[3] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X - 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[2] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[2] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
 
         # Bottom row
         elif (Y == 6):
             # check allies
             if (arrayIn[Y - 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[0] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[0] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X + 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[3] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[3] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X - 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[2] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[2] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
 
         # Leftmost Column
         elif (X == 0):
             # check allies
             if (arrayIn[Y][X + 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[3] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[3] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y + 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[1] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[1] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y - 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[0] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[0] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
 
         # Rightmost column
         elif (X == 6):
             # check allies
             if (arrayIn[Y][X - 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[2] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[2] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y + 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[1] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[1] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y - 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[0] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[0] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
 
         # Everywhere in between
         else:
             # check allies
             if (arrayIn[Y + 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[1] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[1] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y - 1][X].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[0] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[0] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X + 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[3] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[3] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-
             if (arrayIn[Y][X - 1].getPiece() == current_player):
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
                 updated_coordinates[2] = True
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
-            else:
-                updated_coordinates = arrayIn[Y][X].getAllyCoordinates()
-                updated_coordinates[2] = False
-                arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
 
+        arrayIn[Y][X].setAllyCoordinates(updated_coordinates)
         return arrayIn
 
     def attemptCapture(self, arrayIn, current_player):
         updatedArray = arrayIn
+        captured_coordinates_x = []
+        captured_coordinates_y = []
 
         #Go through whole board, checking if piece can be captured. If so, remove it from board:
         for x in range(len(arrayIn)):
             for y in range(len(arrayIn[0])):
-                if(self.checkCapture(x, y, updatedArray)):
-                    self.prisonerCaptured.emit(1, current_player)
-                    updatedArray[y][x].setPiece(0)
+                if self.checkCapture(x, y, updatedArray):
+                    captured_coordinates_x.append(x)
+                    captured_coordinates_y.append(y)
+
+        for i in range(len(captured_coordinates_x)):
+            Y = captured_coordinates_y[i]
+            X = captured_coordinates_x[i]
+            self.prisonerCaptured.emit(1, current_player)
+            updatedArray[Y][X].setPiece(0)
 
         updatedArray = self.updateLiberties(updatedArray)
         updatedArray = self.updateAllies(updatedArray)
@@ -500,14 +348,7 @@ class GameLogic(QObject):
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -515,19 +356,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[1] == True):
                             print("Below ally")
-                            if (self.checkCapture(X + 1, Y + 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
+                            if (self.checkCapture(X, Y + 1, modified_array)):
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -535,6 +371,8 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
 
@@ -554,14 +392,7 @@ class GameLogic(QObject):
                         if (allies[2] == True):
                             print("Left ally")
                             if (self.checkCapture(X - 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -569,19 +400,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[1] == True):
                             print("Below ally")
-                            if (self.checkCapture(X + 1, Y + 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
+                            if (self.checkCapture(X, Y + 1, modified_array)):
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -589,8 +415,16 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
+                        if (modified_array[Y][X].getPiece() == 1):
+                            modified_array[Y][X].setPiece(2)
+                        elif (modified_array[Y][X].getPiece() == 2):
+                            modified_array[Y][X].setPiece(1)
+                        else:
+                            print("What? How?")
 
                     # Bottom Right corner
                     elif (X == 6 and Y == 6):
@@ -608,14 +442,7 @@ class GameLogic(QObject):
                         if (allies[2] == True):
                             print("Left ally")
                             if (self.checkCapture(X - 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -623,19 +450,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[0] == True):
                             print("Above ally")
                             if (self.checkCapture(X, Y - 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -643,8 +465,16 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
+                        if (modified_array[Y][X].getPiece() == 1):
+                            modified_array[Y][X].setPiece(2)
+                        elif (modified_array[Y][X].getPiece() == 2):
+                            modified_array[Y][X].setPiece(1)
+                        else:
+                            print("What? How?")
 
                     # Bottom left corner
                     elif (X == 0 and Y == 6):
@@ -662,14 +492,7 @@ class GameLogic(QObject):
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -677,19 +500,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[0] == True):
                             print("Above ally")
                             if (self.checkCapture(X, Y - 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -697,8 +515,16 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
+                        if (modified_array[Y][X].getPiece() == 1):
+                            modified_array[Y][X].setPiece(2)
+                        elif (modified_array[Y][X].getPiece() == 2):
+                            modified_array[Y][X].setPiece(1)
+                        else:
+                            print("What? How?")
 
                     # Leftmost column
                     elif (X == 0):
@@ -715,14 +541,7 @@ class GameLogic(QObject):
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -730,19 +549,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[1] == True):
                             print("Below ally")
-                            if (self.checkCapture(X + 1, Y + 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
+                            if (self.checkCapture(X, Y + 1, modified_array)):
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -750,19 +564,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[0] == True):
                             print("Above ally")
                             if (self.checkCapture(X, Y - 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -770,8 +579,16 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
+                        if (modified_array[Y][X].getPiece() == 1):
+                            modified_array[Y][X].setPiece(2)
+                        elif (modified_array[Y][X].getPiece() == 2):
+                            modified_array[Y][X].setPiece(1)
+                        else:
+                            print("What? How?")
 
                     # Rightmost column
                     elif (X == 6):
@@ -789,14 +606,7 @@ class GameLogic(QObject):
                         if (allies[2] == True):
                             print("Left ally")
                             if (self.checkCapture(X - 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -804,19 +614,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[1] == True):
                             print("Below ally")
-                            if (self.checkCapture(X + 1, Y + 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
+                            if (self.checkCapture(X, Y + 1, modified_array)):
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -824,19 +629,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[0] == True):
                             print("Above ally")
                             if (self.checkCapture(X, Y - 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -844,8 +644,16 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
+                        if (modified_array[Y][X].getPiece() == 1):
+                            modified_array[Y][X].setPiece(2)
+                        elif (modified_array[Y][X].getPiece() == 2):
+                            modified_array[Y][X].setPiece(1)
+                        else:
+                            print("What? How?")
 
                     # Top row
                     elif (Y == 0):
@@ -863,14 +671,7 @@ class GameLogic(QObject):
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -878,19 +679,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[2] == True):
                             print("Left ally")
                             if (self.checkCapture(X - 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -898,19 +694,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[1] == True):
                             print("Below ally")
-                            if (self.checkCapture(X + 1, Y + 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
+                            if (self.checkCapture(X, Y + 1, modified_array)):
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -918,8 +709,16 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
+                        if (modified_array[Y][X].getPiece() == 1):
+                            modified_array[Y][X].setPiece(2)
+                        elif (modified_array[Y][X].getPiece() == 2):
+                            modified_array[Y][X].setPiece(1)
+                        else:
+                            print("What? How?")
 
                     elif (Y == 6):
                         print("y = 6")
@@ -936,14 +735,7 @@ class GameLogic(QObject):
                         if (allies[3] == True):
                             print("Right ally")
                             if (self.checkCapture(X + 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -951,19 +743,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[2] == True):
                             print("Left ally")
                             if (self.checkCapture(X - 1, Y, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -971,19 +758,14 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[0] == True):
                             print("Above ally")
                             if (self.checkCapture(X, Y - 1, modified_array)):
-                                if (modified_array[Y][X].getPiece() == 1):
-                                    modified_array[Y][X].setPiece(2)
-                                elif (modified_array[Y][X].getPiece() == 2):
-                                    modified_array[Y][X].setPiece(1)
-                                else:
-                                    print("What? How?")
                                 captured = True
-                                return captured
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
                                     modified_array[Y][X].setPiece(2)
@@ -991,8 +773,16 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
+                        if (modified_array[Y][X].getPiece() == 1):
+                            modified_array[Y][X].setPiece(2)
+                        elif (modified_array[Y][X].getPiece() == 2):
+                            modified_array[Y][X].setPiece(1)
+                        else:
+                            print("What? How?")
 
                     # Everywhere else
                     else:
@@ -1018,6 +808,8 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[2] == True):
@@ -1031,11 +823,13 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[1] == True):
                             print("Below ally")
-                            if (self.checkCapture(X + 1, Y + 1, modified_array)):
+                            if (self.checkCapture(X, Y + 1, modified_array)):
                                 captured = True
                             else:
                                 if (modified_array[Y][X].getPiece() == 1):
@@ -1044,6 +838,8 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (allies[0] == True):
@@ -1057,6 +853,8 @@ class GameLogic(QObject):
                                     modified_array[Y][X].setPiece(1)
                                 else:
                                     print("What? How?")
+                                self.updateAllies(modified_array)
+                                self.updateLiberties(modified_array)
                                 captured = False
                                 return captured
                         if (modified_array[Y][X].getPiece() == 1):
@@ -1071,6 +869,9 @@ class GameLogic(QObject):
                 print("Liberties more than 1")
                 captured = False
                 return captured
+
+        self.updateAllies(modified_array)
+        self.updateLiberties(modified_array)
 
         return captured
 
