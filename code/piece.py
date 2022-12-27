@@ -7,6 +7,7 @@ class Piece(object):
     ally_count = 0 #default no allies
     x = -1
     y= -1
+    captured = False
     ally_coordinates = [False, False, False, False]
                       # Above  Below  Left   Right
                       # 0      1      2      3
@@ -49,3 +50,10 @@ class Piece(object):
 
     def getY(self):
         return self.y
+
+    def getCaptured(self):
+        cap = self.captured
+        return cap
+
+    def setCaptured(self, cap):
+        self.captured = cap

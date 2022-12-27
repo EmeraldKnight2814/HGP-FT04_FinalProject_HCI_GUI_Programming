@@ -298,6 +298,7 @@ class GameLogic(QObject):
             X = captured_coordinates_x[i]
             self.prisonerCaptured.emit(1, current_player)
             updatedArray[Y][X].setPiece(0)
+            updatedArray[Y][X].setCaptured(True)
 
         updatedArray = self.updateLiberties(updatedArray)
         updatedArray = self.updateAllies(updatedArray)
@@ -889,26 +890,30 @@ class GameLogic(QObject):
             print("Allies found: " + str(allies))
 
             if (liberties > 0 or allies > 0):
-                arrayIn[newY][newX].setPiece(current_player)
-                arrayIn = self.updateLiberties(arrayIn)
-                arrayIn = self.updateAllies(arrayIn)
-
-                boardArray = self.attemptCapture(arrayIn, current_player)
-                self.updateTerritory(boardArray)
-
-                # switch players
-                # NOTE: I would like to change this to Match/Case, however my machine is only capable of Python 3.9 at this time.
-                if (current_player == 1):
-                    current_player = 2
-                    self.playerChange.emit(current_player)
-                elif (current_player == 2):
-                    current_player = 1
-                    self.playerChange.emit(current_player)
+                if arrayIn[newY][newX].getCaptured():
+                    print("Piece cannot be placed here")
+                    arrayIn[newY][newX].setPiece(0)
                 else:
-                    current_player = 1
-                    self.playerChange.emit(current_player)
+                    arrayIn[newY][newX].setPiece(current_player)
+                    arrayIn = self.updateLiberties(arrayIn)
+                    arrayIn = self.updateAllies(arrayIn)
 
-                self.updateBoardSignal.emit(boardArray, current_player)
+                    boardArray = self.attemptCapture(arrayIn, current_player)
+                    self.updateTerritory(boardArray)
+
+                    # switch players
+                    # NOTE: I would like to change this to Match/Case, however my machine is only capable of Python 3.9 at this time.
+                    if (current_player == 1):
+                        current_player = 2
+                        self.playerChange.emit(current_player)
+                    elif (current_player == 2):
+                        current_player = 1
+                        self.playerChange.emit(current_player)
+                    else:
+                        current_player = 1
+                        self.playerChange.emit(current_player)
+
+                    self.updateBoardSignal.emit(boardArray, current_player)
             else:
                 arrayIn[newY][newX].setPiece(current_player)
                 if(newX == 0 and newY == 0):
